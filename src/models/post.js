@@ -1,4 +1,4 @@
-import { Sequelize,DataTypes, DATE } from "sequelize";
+import { Sequelize,DataTypes } from "sequelize";
 let sequelize = new Sequelize()
 
 let post = sequelize.define('Posts',{
