@@ -5,7 +5,7 @@ import Postrouter from './src/routes/post.js'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 
-db.sync({alter:true}).then(()=>{
+db.sync().then(()=>{
     console.log("Database is connected successfully");
 }).catch((error)=>{
     console.log(error);

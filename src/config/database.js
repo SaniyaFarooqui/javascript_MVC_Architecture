@@ -2,7 +2,7 @@ import {Sequelize} from "sequelize";
 import dotenv from 'dotenv';
 dotenv.config()
 
-export default new Sequelize(process.env.MySQL_DATABASE_NAME, process.env.MySQL_USERNAME, process.env.MySQL_PASSWORD, {
+let database = new Sequelize(process.env.MySQL_DATABASE_NAME, process.env.MySQL_USERNAME, process.env.MySQL_PASSWORD, {
   host: "localhost",
   dialect: "mysql",
   define: {
@@ -10,3 +10,4 @@ export default new Sequelize(process.env.MySQL_DATABASE_NAME, process.env.MySQL_
     freezeTableName: true,
   },
 });
+export default database;

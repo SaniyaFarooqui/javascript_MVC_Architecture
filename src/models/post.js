@@ -1,7 +1,7 @@
-import { Sequelize,DataTypes } from "sequelize";
-let sequelize = new Sequelize()
+import { DataTypes } from "sequelize";
+import Database from "../config/database.js";
 
-let post = sequelize.define('Posts',{
+let post = Database.define('Posts',{
     id:{
         type:DataTypes.UUID,
         primaryKey:true,
@@ -19,18 +19,18 @@ let post = sequelize.define('Posts',{
     },
     date:{
         type:DataTypes.DATE,
-        defaultValue:sequelize.fn('now')
+        defaultValue:Database.fn('now')
     },
     tag:{
         type:DataTypes.STRING
     },
     createdAt:{
         type:DataTypes.DATE,
-        defaultValue:sequelize.fn('now')
+        defaultValue:Database.fn('now')
     },
     updatedAt:{
         type:DataTypes.DATE,
-        defaultValue:sequelize.fn('now')
+        defaultValue:Database.fn('now')
     }
 });
 export default post;
