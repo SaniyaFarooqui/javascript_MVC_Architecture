@@ -4,10 +4,13 @@ import PostController from "../controller/post.js";
 let postcontroller = new PostController()
 const router = Router()
 
-router.post("/api/post/createPost",postcontroller.createPost);
-router.get("")
-router.put("")
-router.delete("")
+router.post("/createPost",postcontroller.createPost);
+router.put("/updatePost/:id",postcontroller.updatePost)
+
+router.get("/getAllPost",postcontroller.getAllPost)
+router.get("/getPostById/:id",postcontroller.getPostById)
+
+router.delete("/deletePost/:id",postcontroller.deletePost)
 
 export default router;
 

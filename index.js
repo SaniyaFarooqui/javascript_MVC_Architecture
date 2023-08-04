@@ -19,7 +19,7 @@ app.use(cors());
 app.use(bodyParser())
 
 //routers started here
-app.use("/post",Postrouter)
+app.use("/api/post",Postrouter)
 
 app.listen(port, ()=>{
     console.log(`Server is accesssing on port : ${port}`);

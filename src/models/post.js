@@ -19,18 +19,18 @@ let post = Database.define('Posts',{
     },
     date:{
         type:DataTypes.DATE,
-        defaultValue:Database.fn('now')
+        defaultValue: new Date().toISOString()
     },
     tag:{
         type:DataTypes.STRING
     },
     createdAt:{
         type:DataTypes.DATE,
-        defaultValue:Database.fn('now')
+        defaultValue: new Date().toISOString()
     },
     updatedAt:{
         type:DataTypes.DATE,
-        defaultValue:Database.fn('now')
+        defaultValue:new Date().toISOString()
     }
 });
 export default post;
