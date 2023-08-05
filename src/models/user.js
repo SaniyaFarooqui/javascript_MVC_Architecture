@@ -1,5 +1,5 @@
 import { Sequelize , DataTypes} from "sequelize";
-import database from "../config/database";
+import database from "../config/database.js";
 
 
 let user = database.define("users",{
@@ -18,7 +18,19 @@ let user = database.define("users",{
     },
     email:{
         type:DataTypes.STRING,
-        unique:true,
+        allowNull:false,
+        unique:{
+            msg:"Email already exists"
+        },
+        validate:{
+            notEmpty:{
+                msg:"Email Required"
+            },
+            isEmail:{
+                msg:"Incorrect Email"
+            },
+            
+        }
     },
     password:{
         type:DataTypes.STRING
@@ -34,11 +46,11 @@ let user = database.define("users",{
     },
     createdAt:{
         type:DataTypes.DATE,
-        defaultValue:Sequelize.fn("now")
+        defaultValue:new Date().toISOString()
     },
     updatedAt:{
         type:DataTypes.DATE,
-        defaultValue:Sequelize.fn("now")
+        defaultValue: new Date().toISOString()
     }
 
 });
