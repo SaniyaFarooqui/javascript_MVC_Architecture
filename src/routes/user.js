@@ -6,6 +6,7 @@ let router = Router()
 
 router.post("/createUser",userController.CreateUser)
 
+router.put("/updateUser/:id",userController.UpdateUser)
 
 
 

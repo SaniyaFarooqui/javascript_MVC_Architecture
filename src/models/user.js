@@ -11,10 +11,32 @@ let user = database.define("users",{
         allowNull:false
     },
     name:{
-        type:DataTypes.STRING
+        type:DataTypes.STRING,
+        validate:{
+            notEmpty:{
+                msg:"Name can't be empty"
+            },
+            // :{
+            //     RegExp:"^[\\p{L} .'-]+$",
+            //     msg:"Invalid Name"
+            // }
+        }
     },
     age:{
-        type:DataTypes.BIGINT
+        type:DataTypes.BIGINT,
+        validate:{
+            notEmpty:{
+                msg :"Age is required"
+            },
+            min:{
+                args:18,
+                msg:"Age must be above 18"
+            },
+            max:{
+                args:80,
+                msg:"maximum age allowed is 80"
+            }
+        }
     },
     email:{
         type:DataTypes.STRING,
@@ -33,7 +55,16 @@ let user = database.define("users",{
         }
     },
     password:{
-        type:DataTypes.STRING
+        type:DataTypes.STRING,
+        validate:{
+            notEmpty:{
+                msg:"password required"
+            },
+            len:{
+                args:[6,12],
+                msg:"passowrd must be between 6 to 12"
+            }
+        }
     },
     address:{
         type:DataTypes.TEXT
