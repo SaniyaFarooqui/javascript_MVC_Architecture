@@ -68,7 +68,7 @@ class UserController{
         let page = req.params.page 
         let limit = req.params.limit
         if(page == null || page == undefined || limit == null || limit == undefined || page == 0 || limit == 0){
-            page = 1
+            page = 0
             limit = 10
         }
         let offset = page * limit

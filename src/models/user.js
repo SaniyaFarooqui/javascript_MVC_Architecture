@@ -72,15 +72,21 @@ let user = database.define("users",{
     country:{
         type:DataTypes.STRING
     },
+    state:{
+        type:DataTypes.STRING
+    },
+    city:{
+        type:DataTypes.STRING
+    },
     phone_no:{
         type:DataTypes.STRING
     },
     createdAt:{
-        type:DataTypes.DATE,
+        type:DataTypes.STRING,
         defaultValue:new Date().toISOString()
     },
     updatedAt:{
-        type:DataTypes.DATE,
+        type:DataTypes.STRING,
         defaultValue: new Date().toISOString()
     }
 
