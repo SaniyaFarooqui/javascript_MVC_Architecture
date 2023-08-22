@@ -8,19 +8,14 @@ let like = database.define("likes",{
         defaultValue : DataTypes.UUIDV4,
         allowNull : false
     },
-    user_id:{
-        type:DataTypes.STRING
+    post_id :{
+        type : DataTypes.STRING
     },
-    post_like:{
-        type:DataTypes.BOOLEAN,
-        defaultValue:false
+    user_id : {
+        type : DataTypes.STRING
     },
-    commentLike:{
-        type:DataTypes.BOOLEAN,
-        defaultValue:false
-    },
-    count : {
-        type:DataTypes.BIGINT
+    comment_id : {
+        type : DataTypes.STRING
     },
     createdAt:{
         type:DataTypes.STRING,
@@ -30,7 +25,6 @@ let like = database.define("likes",{
         type:DataTypes.STRING,
         defaultValue: new Date().toISOString()
     }
-
 });
 
 export default like
