@@ -1,0 +1,35 @@
+import { Sequelize , DataTypes} from "sequelize";
+import database from "../config/database.js";
+
+let userActivty = database.define("useractivties",{
+
+    id :{
+        type:DataTypes.STRING,
+        primaryKey : true,
+        allowNull : false,
+        defaultValue : DataTypes.UUIDV4
+    },
+
+    user_id : {
+        type : DataTypes.STRING
+    },
+
+    location : {
+        type : DataTypes.STRING
+    },
+    
+    description : {
+        type : DataTypes.STRING
+    },
+    
+    createdAt:{
+        type:DataTypes.STRING,
+        defaultValue: new Date().toISOString()
+    },
+    updatedAt:{
+        type:DataTypes.STRING,
+        defaultValue:new Date().toISOString()
+    }
+    
+});
+export default userActivty

@@ -10,6 +10,7 @@ router.put("/updatelike/:id",likecontroller.updateLike),
 
 router.get("/getAllLike",likecontroller.getAllLike),
 router.get("/getLikeById/:id",likecontroller.getLikeById),
+router.get("/getAllLikeByPostId/:id",likecontroller.getAllLikeByPostId),
 
 router.delete("/deleteLikeById/:id",likecontroller.deleteLike)
 

@@ -109,6 +109,28 @@ class LikeController {
     }
   }
 
+  getAllLikeByPostId = async(req,res)=>{
+    let {id} = req.params
+    if(id == undefined || id == null){
+      res.status(400).json({error:"Please provide the Id of post Like"})  
+    }else{
+      try {
+        let response = await Like.findAndCountAll({
+          where:{
+            post_id:id
+          }
+        })
+        if(response == null || response == undefined){
+          res.status(200).json({message:"No Data Found"})
+        }else{
+          res.status(200).json({data:response});
+        }
+      } catch (error) {
+        res.status(400).json({error:error.message})
+      }
+    }
+  }
+
   deleteLike = async(req,res) =>{
     let id = req.params.id
     console.log(id);
