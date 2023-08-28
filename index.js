@@ -7,12 +7,14 @@ import bodyParser from 'body-parser'
 import userRouter from './src/routes/user.js'
 import commentRouter from './src/routes/comment.js'
 import likeRouter from './src/routes/like.js'
+import setAssociations from './src/models/associations.js'
 
 db.sync({alter:true}).then(()=>{
     console.log("Database is connected successfully");
 }).catch((error)=>{
     console.log(error);
 })
+setAssociations()
 
 dotenv.config()
 let app = express()

@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import database from "../config/database.js";
+import post from "./post.js";
 
 let comment = database.define("comments",{
     id:{
@@ -7,6 +8,9 @@ let comment = database.define("comments",{
         primaryKey : true,
         defaultValue : DataTypes.UUIDV4,
         allowNull : false,
+    },
+    post_id:{
+        type:DataTypes.STRING
     },
     user_id:{
         type:DataTypes.STRING
