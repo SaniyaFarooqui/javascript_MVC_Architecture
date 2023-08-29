@@ -7,7 +7,7 @@ class LikeController {
 
   createLike = async (req, res) => {
     let LikeData = req.body;
-    console.log(LikeData);
+    //console.log(LikeData);
     if (LikeData.user_id == undefined && LikeData.post_id == undefined || LikeData.user_id == undefined && LikeData.comment_id == undefined) {
       res.status(400).json({ error: "Please fill the required field" });
     } else {
@@ -18,9 +18,10 @@ class LikeController {
           let isexist = await Like.findOne({
             where:{
               user_id:LikeData.user_id,
-              post_id:LikeData.post_id
+              PostId:LikeData.PostId
             }
           });
+          console.log(isexist);
           if(isexist == null){
             let response = await Like.create(LikeData);
             console.log(response);
@@ -67,6 +68,20 @@ class LikeController {
       }
     }
   };
+
+  commentlike = async(req,res)=>{
+    let commentData = req.data
+    if(commentData.comment_id == undefined && commentData.user_id == undefined|| commentData.user_id == null && commentData.comment_id == undefined){
+      res.status(400).json({error : "please provide required Data"})
+    }else{
+      try {
+        
+
+      } catch (error) {
+        
+      }
+    }
+  }
 
   getAllLike = async(req, res) => {
     let page = req.params.page

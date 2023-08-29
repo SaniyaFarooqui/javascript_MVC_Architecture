@@ -1,0 +1,69 @@
+{
+    "data": {
+        "count": 2,
+        "rows": [
+            {
+                "id": "54fd53ad-257a-4876-b442-68a4055106cc",
+                "title": "alfiya's first Post",
+                "user_id": "eb959984-8fda-442f-9cb7-7bdd129276db",
+                "location": "Dharavi",
+                "date": "2023-08-29T15:21:28.663Z",
+                "tag": "alam_5",
+                "createdAt": "2023-08-29T15:21:28.663Z",
+                "updatedAt": "2023-08-29T15:21:28.663Z",
+                "comments": [
+                    {
+                        "id": "2518a60f-e242-4558-a225-b0db04fb7cde",
+                        "user_id": "eb959984-8fda-442f-9cb7-7bdd129276db",
+                        "description": "you are so mad",
+                        "commentAt": "2023-08-29T15:23:03.335Z",
+                        "createdAt": "2023-08-29T15:23:03.335Z",
+                        "updatedAt": "2023-08-29T15:23:03.335Z",
+                        "PostId": "54fd53ad-257a-4876-b442-68a4055106cc"
+                    }
+                ],
+                "likes": [
+                    {
+                        "id": "35f0eb8f-bf9f-4db7-84d0-5a322a9278c4",
+                        "user_id": "60a183c1-463d-49b4-8af3-b996eda73408",
+                        "comment_id": null,
+                        "createdAt": "2023-08-29T15:23:03.337Z",
+                        "updatedAt": "2023-08-29T15:23:03.337Z",
+                        "PostId": "54fd53ad-257a-4876-b442-68a4055106cc"
+                    }
+                ]
+            },
+            {
+                "id": "d226de43-4a61-4c46-8ff7-31c94fd83812",
+                "title": "Saniya's first Post",
+                "user_id": "60a183c1-463d-49b4-8af3-b996eda73408",
+                "location": "Dharavi",
+                "date": "2023-08-29T15:25:25.854Z",
+                "tag": "alam_5",
+                "createdAt": "2023-08-29T15:25:25.854Z",
+                "updatedAt": "2023-08-29T15:25:25.854Z",
+                "comments": [
+                    {
+                        "id": "1212bbbb-2a76-4498-98e7-b2e5423c2003",
+                        "user_id": "eb959984-8fda-442f-9cb7-7bdd129276db",
+                        "description": "Saniya is very manipulative",
+                        "commentAt": "2023-08-29T15:25:25.923Z",
+                        "createdAt": "2023-08-29T15:25:25.923Z",
+                        "updatedAt": "2023-08-29T15:25:25.923Z",
+                        "PostId": "d226de43-4a61-4c46-8ff7-31c94fd83812"
+                    }
+                ],
+                "likes": [
+                    {
+                        "id": "edd388e4-48bd-4737-b6cf-19d9588ae6b0",
+                        "user_id": "60a183c1-463d-49b4-8af3-b996eda73408",
+                        "comment_id": null,
+                        "createdAt": "2023-08-29T15:25:25.927Z",
+                        "updatedAt": "2023-08-29T15:25:25.927Z",
+                        "PostId": "d226de43-4a61-4c46-8ff7-31c94fd83812"
+                    }
+                ]
+            }
+        ]
+    }
+}

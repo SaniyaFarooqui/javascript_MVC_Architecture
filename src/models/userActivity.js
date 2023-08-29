@@ -1,7 +1,7 @@
 import { Sequelize , DataTypes} from "sequelize";
 import database from "../config/database.js";
 
-let userActivty = database.define("useractivties",{
+let UserActivty = database.define("useractivities",{
 
     id :{
         type:DataTypes.STRING,
@@ -32,4 +32,4 @@ let userActivty = database.define("useractivties",{
     }
     
 });
-export default userActivty
+export default UserActivty

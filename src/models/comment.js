@@ -9,9 +9,6 @@ let comment = database.define("comments",{
         defaultValue : DataTypes.UUIDV4,
         allowNull : false,
     },
-    post_id:{
-        type:DataTypes.STRING
-    },
     user_id:{
         type:DataTypes.STRING
     },

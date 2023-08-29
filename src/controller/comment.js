@@ -25,6 +25,7 @@ class CommentController{
     }
   };
 
+ 
   updateComment = async(req,res) =>{
     let {id} = req.params
     let commentData = req.body

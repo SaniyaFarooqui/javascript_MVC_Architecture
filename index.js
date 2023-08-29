@@ -8,8 +8,9 @@ import userRouter from './src/routes/user.js'
 import commentRouter from './src/routes/comment.js'
 import likeRouter from './src/routes/like.js'
 import setAssociations from './src/models/associations.js'
+import userActivityRouter from './src/routes/userActivity.js'
 
-db.sync({alter:true}).then(()=>{
+db.sync().then(()=>{
     console.log("Database is connected successfully");
 }).catch((error)=>{
     console.log(error);
@@ -28,6 +29,8 @@ app.use("/api/post",Postrouter)
 app.use("/api/user",userRouter)
 app.use("/api/comment",commentRouter)
 app.use("/api/like",likeRouter)
+app.use("/api/userActivity",userActivityRouter)
+
 
 app.listen(port, ()=>{
     console.log(`Server is accesssing on port : ${port}`);
