@@ -1,5 +1,7 @@
 import user from "../models/user.js";
 import { Op } from "sequelize";
+import UserActivty from "../models/userActivity.js";
+import post from "../models/post.js";
 
 class UserController{
 
@@ -75,7 +77,8 @@ class UserController{
         try {
             let response = await user.findAndCountAll({
                 offset : offset,
-                limit : limit
+                limit : limit,
+                include: [{model : UserActivty },{model:post}]
             });
             if(response.count == 0 || response.rows.length == 0){
                 res.status(200).json({message:"no data avaliable"});
@@ -84,7 +87,7 @@ class UserController{
             }
         } catch (error) {
             console.log(error);
-            res.status(400),json({error:error.message});
+            res.status(400).json({error:error.message});
         }
     }
 

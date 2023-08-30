@@ -10,7 +10,7 @@ import likeRouter from './src/routes/like.js'
 import setAssociations from './src/models/associations.js'
 import userActivityRouter from './src/routes/userActivity.js'
 
-db.sync().then(()=>{
+db.sync({alter:true}).then(()=>{
     console.log("Database is connected successfully");
 }).catch((error)=>{
     console.log(error);

@@ -1,6 +1,7 @@
 import comment from "../models/comment.js";
 import like from "../models/like.js";
 import post from "../models/post.js";
+import user from "../models/user.js";
 
 class PostController {
   constructor() {
@@ -63,7 +64,7 @@ class PostController {
     let offset = page * limit;
     console.log(offset); 
     try {
-      let response = await post.findAndCountAll({ offset: offset, limit: limit,include:[{model:comment},{model:like}]});
+      let response = await post.findAndCountAll({ offset: offset, limit: limit,include:[{model:comment},{model:like},{model:user}]});
       console.log(response);
       if (response.count == 0 || response.rows.length == 0) {
         res.status(200).json({ message: "No Data Available" });

@@ -13,9 +13,11 @@ let associations = ()=> {
     post.hasMany(like,{onUpdate:"CASCADE",onDelete:"CASCADE",foreignKey:"PostId"});
     like.belongsTo(post);
 
-    user.hasMany(UserActivty,{onUpdate:"CASCADE",onDelete:"CASCADE",foreignKey:"user_id"});
+    user.hasMany(UserActivty,{onUpdate:"CASCADE",onDelete:"CASCADE",foreignKey:"userId"});
     UserActivty.belongsTo(user);
     
+    user.hasMany(post,{onUpdate:"CASCADE",onDelete:"CASCADE",foreignKey:"userId"});
+    post.belongsTo(user);
 }
 
 export default associations;

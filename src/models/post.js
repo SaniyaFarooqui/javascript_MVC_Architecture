@@ -11,9 +11,6 @@ let post = Database.define('Posts',{
     title:{
         type:DataTypes.STRING,
     },
-    user_id:{
-        type:DataTypes.STRING,
-    },
     location:{
         type:DataTypes.STRING
     },
