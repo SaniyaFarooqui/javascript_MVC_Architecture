@@ -6,10 +6,10 @@ class userActivtyController{
 
     }
 
-    createUserActivity =async (res,req)=>{
+    createUserActivity = async(req,res)=>{
         let userActivity = req.body
-        if(userActivity == null || userActivity == undefined){
-            res.status(400).json({error : "please entre userActivity"})
+        if(userActivity == null || userActivity== undefined){
+            res.status(400).json({error :"please entre userActivity"});
         }else{
             try {
                 let response = await userActivty.create(userActivity);
@@ -25,7 +25,7 @@ class userActivtyController{
 
     };
 
-    updateuseractivity = async(res,req) => {
+    updateUserActivity = async(req,res) => {
         let {id} = req.params
         let userActivity = req.body
         if(id == null || id == undefined){
@@ -48,9 +48,9 @@ class userActivtyController{
         }
     };
 
-    getAllUserActivity = async(res,req) => {
+    getAllUserActivity = async(req,res) => {
         let page = req.params.page
-        let limit = req.page.limit
+        let limit = req.params.limit
         if(page == null || page == undefined || limit == null || limit == undefined || page == 0 || limit == 0){
             page = 0
             limit = 10

@@ -6,7 +6,7 @@ let router = Router()
 
     router.post("/createUserActivity",userActivtyController.createUserActivity),
 
-    router.put("/ updateuseractivity/:id",userActivtyController.updateuseractivity),
+    router.put("/updateUserActivity/:id",userActivtyController.updateUserActivity),
 
     router.get("/getAllUserActivity",userActivtyController.getAllUserActivity),
     router.get("/getAllUserActivityById/:id",userActivtyController.getAllUserActivityById),
