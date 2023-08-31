@@ -10,6 +10,7 @@ router.put("/updatePost/:id",postcontroller.updatePost)
 router.get("/getAllPost",postcontroller.getAllPost)
 router.get("/getPostById/:id",postcontroller.getPostById)
 router.get("/getAllPostByUserId/:id",postcontroller.getAllPostByUserId)
+router.get("/searchPosts",postcontroller.SearchPosts)
 
 router.delete("/deletePost/:id",postcontroller.deletePost)
 

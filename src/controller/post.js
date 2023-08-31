@@ -1,3 +1,4 @@
+import { Op, or } from "sequelize";
 import comment from "../models/comment.js";
 import like from "../models/like.js";
 import post from "../models/post.js";
@@ -64,7 +65,14 @@ class PostController {
     let offset = page * limit;
     console.log(offset); 
     try {
-      let response = await post.findAndCountAll({ offset: offset, limit: limit,include:[{model:comment},{model:like},{model:user}]});
+      let response = await post.findAndCountAll({ offset: offset, 
+        limit: limit,
+        include:[{model:comment},{model:like},{model:user,attributes:{exclude:["createdAt","updatedAt"]}}],
+        order:[["createdAt","DESC"]],
+        attributes:{
+          exclude:["userId"]
+        }
+      });
       console.log(response);
       if (response.count == 0 || response.rows.length == 0) {
         res.status(200).json({ message: "No Data Available" });
@@ -118,6 +126,45 @@ class PostController {
         }
       } catch (error) {
         res.status(400).json({error:error.message})
+      }
+    }
+  }
+
+  SearchPosts = async( req , res ) => {
+    let keyword = req.query?.keyword
+    if(keyword == null || keyword == undefined){
+      res.status(200).json({message :"please type something in search box"})
+    }else{
+      try {
+        let response = await post.findAndCountAll({
+          where:{
+            [Op.or]:{
+              title:{
+                [Op.like]:`%${keyword}%`
+              },
+              tag:{
+                [Op.like]:`%${keyword}%`
+              },
+              '$user.email$':{
+                [Op.like]:`%${keyword}%`
+              },
+              '$user.name$':{
+                [Op.like]:`%${keyword}%`
+              }
+            }
+          },
+          include :[{model:like},{model:comment},{model:user}],
+          order:[["createdAt","DESC"]]
+
+        });
+        if(response.rows.length == 0 || response.count == 0){
+          res.status(200).json({message : "No Data Avalible"})
+      }else{
+          res.status(200).json({data : response})
+      }
+        
+      } catch (error) {
+        res.status(400).json({error : error.message});
       }
     }
   }

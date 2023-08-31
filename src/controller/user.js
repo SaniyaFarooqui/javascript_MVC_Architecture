@@ -2,6 +2,8 @@ import user from "../models/user.js";
 import { Op } from "sequelize";
 import UserActivty from "../models/userActivity.js";
 import post from "../models/post.js";
+import like from "../models/like.js";
+import comment from "../models/comment.js";
 
 class UserController{
 
@@ -78,7 +80,11 @@ class UserController{
             let response = await user.findAndCountAll({
                 offset : offset,
                 limit : limit,
-                include: [{model : UserActivty },{model:post}]
+                include: [{model : UserActivty },{model:post,include:[{model:comment},{model:like}],attributes :{exclude:["createdAt","updatedAt"]}}],
+                order:[["createdAt","DESC"]],
+                attributes:{
+                    exclude:["country"]
+                }
             });
             if(response.count == 0 || response.rows.length == 0){
                 res.status(200).json({message:"no data avaliable"});
