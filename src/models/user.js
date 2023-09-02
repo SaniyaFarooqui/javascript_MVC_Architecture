@@ -60,10 +60,6 @@ let user = database.define("users",{
             notEmpty:{
                 msg:"password required"
             },
-            len:{
-                args:[6,12],
-                msg:"passowrd must be between 6 to 12"
-            }
         }
     },
     address:{
@@ -89,7 +85,10 @@ let user = database.define("users",{
         type:DataTypes.STRING,
         defaultValue: new Date().toISOString()
     }
-
-});
+},
+{
+    
+}
+);
 
 export default user

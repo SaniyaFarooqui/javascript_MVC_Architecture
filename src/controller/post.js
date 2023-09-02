@@ -57,7 +57,6 @@ class PostController {
   getAllPost = async(req, res) => {
     let page = req.params.page
     let limit = req.params.limit
-    
     if (page == undefined || page == null || limit == undefined ||limit == null) {
       page = 0;
       limit = 10;
@@ -132,9 +131,12 @@ class PostController {
 
   SearchPosts = async( req , res ) => {
     let keyword = req.query?.keyword
+    let filterBy = req.query.filterBy
+    filterBy = filterBy == null || filterBy == undefined ? "" : filterBy 
     if(keyword == null || keyword == undefined){
       res.status(200).json({message :"please type something in search box"})
-    }else{
+    }
+    else{
       try {
         let response = await post.findAndCountAll({
           where:{
@@ -151,6 +153,9 @@ class PostController {
               '$user.name$':{
                 [Op.like]:`%${keyword}%`
               }
+            },
+            location:{
+              [Op.like] : `%${filterBy}%`
             }
           },
           include :[{model:like},{model:comment},{model:user}],

@@ -1,4 +1,4 @@
-import { DataTypes, Sequelize } from "sequelize";
+import { DataTypes } from "sequelize";
 import Database from "../config/database.js";
 
 let post = Database.define('Posts',{
@@ -18,6 +18,7 @@ let post = Database.define('Posts',{
         type:DataTypes.STRING,
         defaultValue: new Date().toISOString()
     },
+    
     tag:{
         type:DataTypes.STRING
     },

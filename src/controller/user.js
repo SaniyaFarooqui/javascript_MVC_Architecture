@@ -4,11 +4,33 @@ import UserActivty from "../models/userActivity.js";
 import post from "../models/post.js";
 import like from "../models/like.js";
 import comment from "../models/comment.js";
-
+import bcrypt from 'bcryptjs'
 class UserController{
 
     constructor(){
 
+    }
+
+    LoginController = async(req,res) => {
+        let {email , password} = req.body
+        if(email == undefined || email == null && password == null || password == undefined){
+            res.status(400).json({error:"Email | password Required"});
+        }else{
+            try {
+                let isEmailExist = await user.findOne({
+                    where:{
+                        email:email
+                    }
+                })
+                if(isEmailExist == null){
+                    res.status(400).json({error:"User with this email not registered please Sign up"})
+                }else{
+
+                }
+            } catch (error) {
+                res.status(400).json({error:error})
+            }
+        }
     }
 
     CreateUser = async(req,res) => {
@@ -17,6 +39,8 @@ class UserController{
             res.status(400).json({error: "Name / Email required"});
         }else{
             try {
+                let hashpassword = await bcrypt.hash(userData.password,10);
+                userData.password = hashpassword
                 let response = await user.create(userData);
                 console.log(response);
                 if(response == null || response == undefined){
