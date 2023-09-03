@@ -5,6 +5,9 @@ import post from "../models/post.js";
 import like from "../models/like.js";
 import comment from "../models/comment.js";
 import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
+
+
 class UserController{
 
     constructor(){
@@ -22,10 +25,17 @@ class UserController{
                         email:email
                     }
                 })
+                console.log(isEmailExist);
                 if(isEmailExist == null){
                     res.status(400).json({error:"User with this email not registered please Sign up"})
                 }else{
-
+                    if(await bcrypt.compare(password,isEmailExist.password)){
+                        let token = jwt.sign({id:isEmailExist.id,userName:isEmailExist.name},process.env.jwt_secret,{expiresIn:'5min'});
+                        let refreshToken = jwt.sign({id:isEmailExist.id},process.env.jwt_secret);
+                        res.status(200).json({user:isEmailExist,accesstoken:token,refreshToken:refreshToken});
+                    }else{
+                        res.status(200).json({error:"Invalid Password"});
+                    }
                 }
             } catch (error) {
                 res.status(400).json({error:error})
@@ -39,7 +49,8 @@ class UserController{
             res.status(400).json({error: "Name / Email required"});
         }else{
             try {
-                let hashpassword = await bcrypt.hash(userData.password,10);
+                let salt = await bcrypt.genSalt(10);
+                let hashpassword = await bcrypt.hash(userData.password,salt);
                 userData.password = hashpassword
                 let response = await user.create(userData);
                 console.log(response);
@@ -123,6 +134,7 @@ class UserController{
 
     SearchUsers = async(req,res) => {
         let keyword = req.query?.keyword
+        let filterBy = req.query?.filterBy
         console.log(keyword);
 
         if(keyword == null || keyword == undefined){
@@ -138,6 +150,9 @@ class UserController{
                             email:{
                                 [Op.like]:`%${keyword}%`
                             }    
+                        },
+                        country : {
+                            [Op.like]:`%${filterBy}%`
                         }
                     }
                 });
