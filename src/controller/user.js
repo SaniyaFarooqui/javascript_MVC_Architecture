@@ -30,7 +30,7 @@ class UserController{
                     res.status(400).json({error:"User with this email not registered please Sign up"})
                 }else{
                     if(await bcrypt.compare(password,isEmailExist.password)){
-                        let token = jwt.sign({id:isEmailExist.id,userName:isEmailExist.name},process.env.jwt_secret,{expiresIn:'24hrs'});
+                        let token = jwt.sign({id:isEmailExist.id,userName:isEmailExist.name},process.env.jwt_secret,{expiresIn:'3600min'});
                         let refreshToken = jwt.sign({id:isEmailExist.id},process.env.jwt_secret);
                         res.status(200).json({user:isEmailExist,accesstoken:token,refreshToken:refreshToken});
                     }else{
@@ -45,6 +45,8 @@ class UserController{
 
     CreateUser = async(req,res) => {
         let userData = req.body
+        let file = req.file
+        console.log(file);
         if(userData.name == null || userData.name == undefined || userData.email == null || userData.email == undefined || userData.password == null || userData.password == undefined){
             res.status(400).json({error: "Name / Email required"});
         }else{

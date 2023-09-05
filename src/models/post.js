@@ -14,6 +14,9 @@ let post = Database.define('Posts',{
     location:{
         type:DataTypes.STRING
     },
+    post_image:{
+        type:DataTypes.STRING
+    },
     date:{
         type:DataTypes.STRING,
         defaultValue: new Date().toISOString()

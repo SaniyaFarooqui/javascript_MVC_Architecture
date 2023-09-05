@@ -62,6 +62,9 @@ let user = database.define("users",{
             },
         }
     },
+    user_image:{
+        type:DataTypes.STRING
+    },
     address:{
         type:DataTypes.TEXT
     },

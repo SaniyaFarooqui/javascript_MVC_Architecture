@@ -11,7 +11,8 @@ class PostController {
 
   createPost = async (req, res) => {
     let postData = req.body;
-    
+    let file = req.file
+    console.log(file);
     if (postData == null || postData == undefined) {
       res.status(400).json({ message: "Please fill the required field" });
     } else {
