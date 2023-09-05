@@ -60,7 +60,8 @@ class CommentController{
     try {
       let response = await comment.findAndCountAll({
         offset:offset,
-        limit:limit
+        limit:limit,
+        order:[["createdAt","DESC"]]
       })
       console.log(response);
       if(response.count == 0 || response.rows.length == 0){

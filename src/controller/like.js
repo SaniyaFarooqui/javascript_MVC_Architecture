@@ -94,7 +94,11 @@ class LikeController {
     let offset = page * limit;
     console.log(offset); 
     try {
-      let response = await Like.findAndCountAll({ offset: offset, limit: limit });
+      let response = await Like.findAndCountAll({ 
+        offset: offset,
+        limit: limit,
+        order:[["createdAt","DESC"]]
+       });
       if (response.count == 0 || response.rows.length == 0) {
         res.status(200).json({ message: "No Data Available" });
       } else {

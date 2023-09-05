@@ -10,10 +10,6 @@ let UserActivty = database.define("useractivities",{
         defaultValue : DataTypes.UUIDV4
     },
 
-    user_id : {
-        type : DataTypes.STRING
-    },
-
     location : {
         type : DataTypes.STRING
     },
