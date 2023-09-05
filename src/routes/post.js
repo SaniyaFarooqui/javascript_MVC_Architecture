@@ -9,11 +9,11 @@ router.post("/createPost",isAutheticated,postcontroller.createPost);
 router.put("/updatePost/:id",postcontroller.updatePost)
 
 router.get("/getAllPost",isAutheticated,postcontroller.getAllPost)
-router.get("/getPostById/:id",postcontroller.getPostById)
-router.get("/getAllPostByUserId/:id",postcontroller.getAllPostByUserId)
-router.get("/searchPosts",postcontroller.SearchPosts)
+router.get("/getPostById/:id",isAutheticated,postcontroller.getPostById)
+router.get("/getAllPostByUserId/:id",isAutheticated,postcontroller.getAllPostByUserId)
+router.get("/searchPosts",isAutheticated,postcontroller.SearchPosts)
 
-router.delete("/deletePost/:id",postcontroller.deletePost)
+router.delete("/deletePost/:id",isAutheticated,postcontroller.deletePost)
 
 export default router;
 

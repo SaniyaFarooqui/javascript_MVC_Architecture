@@ -1,20 +1,21 @@
 import { Router } from "express";
 import UserController from "../controller/user.js";
+import isAutheticated from "../middleware/authetication.js";
 
 
 let userController = new UserController()
 let router = Router()
 
-router.post("/createUser",userController.CreateUser)
-router.post("/loginUser",userController.LoginController)
+router.post("/createUser",isAutheticated,userController.CreateUser)
+router.post("/loginUser",isAutheticated,userController.LoginController)
 
 router.put("/updateUser/:id",userController.UpdateUser)
 
-router.get("/getAllUsers",userController.GetAllUsers)
-router.get("/searchUsers",userController.SearchUsers)
-router.get("/getUserById/:id",userController.GetUserById)
+router.get("/getAllUsers",isAutheticated,userController.GetAllUsers)
+router.get("/searchUsers",isAutheticated,userController.SearchUsers)
+router.get("/getUserById/:id",isAutheticated,userController.GetUserById)
 
-router.delete("/deleteUserById/:id",userController.DeleteUser)
+router.delete("/deleteUserById/:id",isAutheticated,userController.DeleteUser)
 
 
 

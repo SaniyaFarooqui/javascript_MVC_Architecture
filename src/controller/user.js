@@ -30,7 +30,7 @@ class UserController{
                     res.status(400).json({error:"User with this email not registered please Sign up"})
                 }else{
                     if(await bcrypt.compare(password,isEmailExist.password)){
-                        let token = jwt.sign({id:isEmailExist.id,userName:isEmailExist.name},process.env.jwt_secret,{expiresIn:'5min'});
+                        let token = jwt.sign({id:isEmailExist.id,userName:isEmailExist.name},process.env.jwt_secret,{expiresIn:'24hrs'});
                         let refreshToken = jwt.sign({id:isEmailExist.id},process.env.jwt_secret);
                         res.status(200).json({user:isEmailExist,accesstoken:token,refreshToken:refreshToken});
                     }else{
