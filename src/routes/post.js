@@ -20,10 +20,10 @@ const router = Router()
 router.post("/createPost",upload.single("file"),isAutheticated,postcontroller.createPost);
 router.put("/updatePost/:id",upload.single("file"),postcontroller.updatePost)
 
-router.get("/getAllPost",isAutheticated,postcontroller.getAllPost)
-router.get("/getPostById/:id",isAutheticated,postcontroller.getPostById)
-router.get("/getAllPostByUserId/:id",isAutheticated,postcontroller.getAllPostByUserId)
-router.get("/searchPosts",isAutheticated,postcontroller.SearchPosts)
+router.get("/getAllPost"/*,isAutheticated*/,postcontroller.getAllPost)
+router.get("/getPostById/:id"/*,isAutheticated*/,postcontroller.getPostById)
+router.get("/getAllPostByUserId/:id"/*,isAutheticated*/,postcontroller.getAllPostByUserId)
+router.get("/searchPosts"/*,isAutheticated*/,postcontroller.SearchPosts)
 
 router.delete("/deletePost/:id",isAutheticated,postcontroller.deletePost)
 

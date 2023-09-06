@@ -22,9 +22,9 @@ router.post("/loginUser",userController.LoginController)
 
 router.put("/updateUser/:id",upload.single("file"),isAutheticated,userController.UpdateUser)
 
-router.get("/getAllUsers",isAutheticated,userController.GetAllUsers)
-router.get("/searchUsers",isAutheticated,userController.SearchUsers)
-router.get("/getUserById/:id",isAutheticated,userController.GetUserById)
+router.get("/getAllUsers"/*,isAutheticated*/,userController.GetAllUsers)
+router.get("/searchUsers"/*,isAutheticated*/,userController.SearchUsers)
+router.get("/getUserById/:id"/*,isAutheticated*/,userController.GetUserById)
 
 router.delete("/deleteUserById/:id",isAutheticated,userController.DeleteUser)
 

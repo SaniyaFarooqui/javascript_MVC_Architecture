@@ -51,9 +51,11 @@ class UserController{
             res.status(400).json({error: "Name / Email required"});
         }else{
             try {
+                let filepath = process.env.server+"/"+file.destination+"/"+file.filename
                 let salt = await bcrypt.genSalt(10);
                 let hashpassword = await bcrypt.hash(userData.password,salt);
                 userData.password = hashpassword
+                userData.user_image = filepath
                 let response = await user.create(userData);
                 console.log(response);
                 if(response == null || response == undefined){
