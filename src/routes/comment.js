@@ -5,7 +5,7 @@ import isAutheticated from "../middleware/authetication.js";
 let commentController = new CommentController()
 const router = Router()
 
-router.post("/createComment",isAutheticated,commentController.createComment),
+router.post("/createComment"/*,isAutheticated*/,commentController.createComment),
 
 router.put("/updateComment/:id",commentController.updateComment),
 

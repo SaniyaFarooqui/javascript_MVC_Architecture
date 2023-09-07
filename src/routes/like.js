@@ -5,7 +5,7 @@ import isAutheticated from "../middleware/authetication.js";
 let likecontroller = new LikeController()
 const router = Router()
 
-router.post("/createlike",isAutheticated,likecontroller.createLike),
+router.post("/createlike"/*,isAutheticated*/,likecontroller.createLike),
 
 router.put("/updatelike/:id",likecontroller.updateLike),
 

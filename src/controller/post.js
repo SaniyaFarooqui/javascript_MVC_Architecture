@@ -15,8 +15,13 @@ class PostController {
     console.log(file);
     if (postData == null || postData == undefined) {
       res.status(400).json({ message: "Please fill the required field" });
-    } else {
+    }else if(file == null || file == undefined){
+      res.status(400).json({ message: "Please select atleast 1 imageas  " });
+    } 
+    else {
       try {
+        let filepath = process.env.server+"/"+file.destination+"/"+file.filename 
+        postData.post_image = filepath
         if(postData.title == undefined || postData.location == undefined){
           res.status(400).json({error:"Please enter the title / location of post"})
         }else{

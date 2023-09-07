@@ -7,40 +7,10 @@ import comment from "../models/comment.js";
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
-
 class UserController{
 
     constructor(){
 
-    }
-
-    LoginController = async(req,res) => {
-        let {email , password} = req.body
-        if(email == undefined || email == null && password == null || password == undefined){
-            res.status(400).json({error:"Email | password Required"});
-        }else{
-            try {
-                let isEmailExist = await user.findOne({
-                    where:{
-                        email:email
-                    }
-                })
-                console.log(isEmailExist);
-                if(isEmailExist == null){
-                    res.status(400).json({error:"User with this email not registered please Sign up"})
-                }else{
-                    if(await bcrypt.compare(password,isEmailExist.password)){
-                        let token = jwt.sign({id:isEmailExist.id,userName:isEmailExist.name},process.env.jwt_secret,{expiresIn:'3600min'});
-                        let refreshToken = jwt.sign({id:isEmailExist.id},process.env.jwt_secret);
-                        res.status(200).json({user:isEmailExist,accesstoken:token,refreshToken:refreshToken});
-                    }else{
-                        res.status(200).json({error:"Invalid Password"});
-                    }
-                }
-            } catch (error) {
-                res.status(400).json({error:error})
-            }
-        }
     }
 
     CreateUser = async(req,res) => {
@@ -51,7 +21,7 @@ class UserController{
             res.status(400).json({error: "Name / Email required"});
         }else{
             try {
-                let filepath = process.env.server+"/"+file.destination+"/"+file.filename
+                let filepath = process.env.server+"/"+file.destination+"/"+file.filename 
                 let salt = await bcrypt.genSalt(10);
                 let hashpassword = await bcrypt.hash(userData.password,salt);
                 userData.password = hashpassword
@@ -78,6 +48,61 @@ class UserController{
         } 
     };
     
+    LoginController = async(req,res) => {
+        let {email , password} = req.body
+        if(email == undefined || email == null && password == null || password == undefined){
+            res.status(400).json({error:"Email | password Required"});
+        }else{
+            try {
+                let isEmailExist = await user.findOne({
+                    where:{
+                        email:email
+                    }
+                })
+                console.log(isEmailExist);
+                if(isEmailExist == null){
+                    res.status(400).json({error:"User with this email not registered please Sign up"})
+                }else{
+                    if(await bcrypt.compare(password,isEmailExist.password)){
+                        let token = jwt.sign({id:isEmailExist.id,userName:isEmailExist.name},process.env.jwt_secret,{expiresIn:'30min'});
+                        let refreshToken = jwt.sign({id:isEmailExist.id},process.env.jwt_secret,{expiresIn:"356d"});
+                        res.cookie("refreshToken",refreshToken,{httpOnly:true,secure:true});
+                        res.status(200).json({user:isEmailExist,accesstoken:token});
+                    }else{
+                        res.status(200).json({error:"Invalid Password"});
+                    }
+                }
+            } catch (error) {
+                res.status(400).json({error:error})
+            }
+        }
+    }
+
+    RefreshToken = async (req,res) => {
+        let refreshToken = req.params.token
+        if(refreshToken == null || refreshToken == undefined){
+            res.status(400).json({error:"refresh token required"})
+        }else{
+            try {
+                let decode = jwt.verify(refreshToken,process.env.jwt_secret)
+                console.log(decode.id);
+                if(decode == null || decode == undefined){
+                    res.status(400).json({error :"invalid token"})
+                }else{
+                    let userData = await user.findByPk(decode.id);
+                    if(userData == null || userData == undefined){
+                        res.status(400).json({error :"invalid refresh token"})
+                    }else{
+                        let token = jwt.sign({id:userData.id,userName:userData.name},process.env.jwt_secret,{expiresIn:'30min'});
+                        res.status(200).json({accesToken:token/*,user:userData*/});
+                    }
+                }
+            } catch (error) {
+                res.status(400).json({error:error.message})
+            }
+        }
+    }
+
     UpdateUser = async(req,res)=>{
         let {id} = req.params
         let userData = req.body
