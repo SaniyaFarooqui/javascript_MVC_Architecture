@@ -196,6 +196,26 @@ class PostController {
     }
   }
 
+  BulkDeletePost = async(req,res) =>{
+    let {ids} = req.body
+    if(ids.length == 0 || ids == null || ids == undefined ){
+      res.status(400).json({error :"please provide ids"})
+    }else{
+      try {
+        let response = await post.destroy({
+          where : {id : ids}
+        })
+        if(response == null || response == undefined){
+          res.status(400).json({error :"couldnot delete try again"})
+        }else{
+          res.status(200).json({message : "deleted successfully"})
+        }
+      } catch (error) {
+        res.status(400).json({error : error.message})
+      }
+    }
+  }
+
 }
 
 export default PostController;

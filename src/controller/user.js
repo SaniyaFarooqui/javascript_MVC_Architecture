@@ -234,6 +234,27 @@ class UserController{
             }
         }
     }
+    
+    BulkDeleteUser = async(req,res) => {
+        let {ids }= req.body
+        console.log(ids);
+        if(ids.length == 0){
+            res.status(400).json({error :"please provide ids to delete"})
+        }else{
+            try {
+                let response = await user.destroy({
+                    where: {id : ids}
+                });
+                if (response == null || response == undefined || response == 0){
+                    res.status(400).json({error : "cannot delete please try again "})
+                }else{
+                    res.status(200).json({message:"deleted successfully"})
+                }
+            } catch (error) {
+                res.status(400).json({error : error.message})
+            }
+        }
+    }
 }
 export default UserController
 
