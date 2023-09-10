@@ -7,7 +7,7 @@ const router = Router()
 
 router.post("/createlike",isAutheticated,likecontroller.createLike),
 
-router.put("/updatelike/:id",likecontroller.updateLike),
+router.put("/updatelike/:id",isAutheticated,likecontroller.updateLike),
 
 router.get("/getAllLike",isAutheticated,likecontroller.getAllLike),
 router.get("/getLikeById/:id",isAutheticated,likecontroller.getLikeById),

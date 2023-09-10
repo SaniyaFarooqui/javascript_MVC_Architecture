@@ -67,7 +67,8 @@ class UserController{
                         let token = jwt.sign({id:isEmailExist.id,userName:isEmailExist.name},process.env.jwt_secret,{expiresIn:'30min'});
                         let refreshToken = jwt.sign({id:isEmailExist.id},process.env.jwt_secret,{expiresIn:"356d"});
                         res.cookie("refreshToken",refreshToken,{httpOnly:true,secure:true});
-                        res.status(200).json({user:isEmailExist,accesstoken:token});
+                        res.cookie("accessToken",token,{httpOnly:true,secure:true});
+                        res.status(200).json({user:isEmailExist});
                     }else{
                         res.status(200).json({error:"Invalid Password"});
                     }
@@ -255,6 +256,18 @@ class UserController{
             }
         }
     }
+
+    LogoutController = (req,res) => {
+        try{
+            res.clearCookie("refreshToken",{domain:"localhost"})
+            res.clearCookie("accessToken",{domain:"localhost"})
+            res.status(200).json({error:"Logout Successfully"})
+            res.end()
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }
+    }
+
 }
 export default UserController
 
