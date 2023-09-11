@@ -60,7 +60,7 @@ class userActivtyController{
             let response = await userActivty.findAndCountAll({
                 offset : offset,
                 limit : limit,
-                order:[["createdAt","DESC"]]
+                order:[["updatedAt","DESC"]]
             })
             if(response.count == 0 || response.rows.length == 0){
                 res.status(200).json({message:"no data avaliable"});

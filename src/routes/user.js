@@ -29,7 +29,8 @@ router.get("/getUserById/:id",isAutheticated,userController.GetUserById)
 
 router.delete("/deleteUserById/:id",isAutheticated,userController.DeleteUser)
 router.delete("/BulkDeleteUser",isAutheticated,userController.BulkDeleteUser)
-router.put("/logoutUser",userController.LogoutController)
+
+router.get("/logoutUser",userController.LogoutController)
 
 
 

@@ -10,6 +10,7 @@ class PostController {
   }
 
   createPost = async (req, res) => {
+    let userId = req.user?.id
     let postData = req.body;
     let file = req.file
     console.log(file);
@@ -22,6 +23,7 @@ class PostController {
       try {
         let filepath = process.env.server+"/"+file.destination+"/"+file.filename 
         postData.post_image = filepath
+        postData.userId = userId
         if(postData.title == undefined || postData.location == undefined){
           res.status(400).json({error:"Please enter the title / location of post"})
         }else{
@@ -74,7 +76,7 @@ class PostController {
       let response = await post.findAndCountAll({ offset: offset, 
         limit: limit,
         include:[{model:comment},{model:like},{model:user,attributes:{exclude:["createdAt","updatedAt"]}}],
-        order:[["createdAt","DESC"]],
+        order:[["updatedAt","DESC"]],
         attributes:{
           exclude:["userId"]
         }

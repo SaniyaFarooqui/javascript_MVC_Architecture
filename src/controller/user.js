@@ -146,7 +146,7 @@ class UserController{
                 offset : offset,
                 limit : limit,
                 include: [{model : UserActivty },{model:post,include:[{model:comment},{model:like}],attributes :{exclude:["createdAt","updatedAt"]}}],
-                order:[["createdAt","DESC"]],
+                order:[["updatedAt","DESC"]],
                 attributes:{
                     exclude:["country"]
                 }
@@ -259,8 +259,8 @@ class UserController{
 
     LogoutController = (req,res) => {
         try{
-            res.clearCookie("refreshToken",{domain:"localhost"})
-            res.clearCookie("accessToken",{domain:"localhost"})
+            res.cookie("accessToken","",{maxAge:1})
+            res.cookie("refreshToken","",{maxAge:1})
             res.status(200).json({error:"Logout Successfully"})
             res.end()
         }catch(error){

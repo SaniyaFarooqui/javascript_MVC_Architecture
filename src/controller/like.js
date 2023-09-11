@@ -97,7 +97,7 @@ class LikeController {
       let response = await Like.findAndCountAll({ 
         offset: offset,
         limit: limit,
-        order:[["createdAt","DESC"]]
+        order:[["updatedAt","DESC"]]
        });
       if (response.count == 0 || response.rows.length == 0) {
         res.status(200).json({ message: "No Data Available" });
