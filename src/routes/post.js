@@ -24,7 +24,7 @@ router.get("/getAllPost",isAutheticated,postcontroller.getAllPost)
 router.get("/getPostById/:id",isAutheticated,postcontroller.getPostById)
 router.get("/getAllPostByUserId/:id",isAutheticated,postcontroller.getAllPostByUserId)
 router.get("/searchPosts",isAutheticated,postcontroller.SearchPosts)
-
+router.get("/ExportPostToCSV"/*,isAutheticated*/,postcontroller.ExportPostToCSV)
 router.delete("/deletePost/:id",isAutheticated,postcontroller.deletePost)
 router.delete("/BulkDeletePost",isAutheticated,postcontroller.BulkDeletePost)
 

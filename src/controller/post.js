@@ -3,6 +3,7 @@ import comment from "../models/comment.js";
 import like from "../models/like.js";
 import post from "../models/post.js";
 import user from "../models/user.js";
+import Papa from 'papaparse'
 
 class PostController {
   constructor() {
@@ -79,7 +80,7 @@ class PostController {
         order:[["updatedAt","DESC"]],
         attributes:{
           exclude:["userId"]
-        }
+        },
       });
       console.log(response);
       if (response.count == 0 || response.rows.length == 0) {
@@ -90,7 +91,26 @@ class PostController {
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
-    
+  }
+
+  ExportPostToCSV = async(req,res) => {
+    let user_attributes = ["name","age","email","country","state"]
+    let comment_attributes =["description"]
+    try {
+      let postData = await post.findAndCountAll({include:[{model:comment,attributes : comment_attributes},{model:user,attributes:user_attributes}],attributes:{exclude:["userId","id","location"]},raw:true});
+      if(postData.rows.length == 0 || postData == null || postData === undefined){
+        res.status(200).json({error:"No Post Found to Export"})
+      }else{
+        let post_parser = JSON.parse(JSON.stringify(postData.rows))
+        let csv = Papa.unparse(post_parser);
+        res.setHeader('Content-Type','text/csv')
+        res.setHeader('Content-Disposition',`attachment; filename=Post${Date.now().toString()}.csv`);
+        res.status(200).send(csv);
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({error:error});
+    }
   }
 
   getAllPostByUserId = async (req,res) => {
