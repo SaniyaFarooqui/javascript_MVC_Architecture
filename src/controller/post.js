@@ -14,7 +14,7 @@ class PostController {
     let userId = req.user?.id
     let postData = req.body;
     let file = req.file
-    console.log(file);
+    console.log(file); 
     if (postData == null || postData == undefined) {
       res.status(400).json({ message: "Please fill the required field" });
     }else if(file == null || file == undefined){

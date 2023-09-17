@@ -1,12 +1,15 @@
 import user from "../models/user.js";
-import { Op } from "sequelize";
+import { Op, json } from "sequelize";
 import UserActivty from "../models/userActivity.js";
 import post from "../models/post.js";
 import like from "../models/like.js";
 import comment from "../models/comment.js";
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-
+import Papa from 'papaparse'
+import excel from 'exceljs'
+import { response } from "express";
+import Stream from 'stream'
 class UserController{
 
     constructor(){
@@ -160,6 +163,60 @@ class UserController{
             console.log(error);
             res.status(400).json({error:error.message});
         }
+    }
+
+    ExportUserToCSV = async(req,res)=>{
+        try {
+            let UserData = await user.findAndCountAll({attributes :{exclude:["id","password"]}})
+            if(UserData.rows.length == null || UserData == null || UserData == undefined){
+                res.status(400).json({error :"no user found to export"})
+            }else{
+                let user_parser = JSON.parse(JSON.stringify(UserData.rows))
+                let csv =Papa.unparse(user_parser);
+                res.setHeader('Content-Type','text/csv')
+                res.setHeader('Content-Disposition',`attachment; filename=User${Date.now().toString()}.csv`)
+                res.status(200).send(csv);
+            }
+        } catch (error) {
+            res.status(400).json({error : error.message})
+        }
+    }
+
+    ExportUserToExcel = async(req,res) =>{
+        try {
+            let userData = await user.findAndCountAll()
+            if(userData == null || userData == undefined){
+                res.status(200).json({message:"No Data Found"});
+            }else{
+                let key = Object.keys(userData.rows[0].dataValues)
+                let datacolumns = []
+                for(let i=0; i < key.length ; i++){
+                    let object = {}
+                    object["header"] = key[i].split(",")[0]
+                    object["key"] = key[i]
+                    object["width"] = 20
+                    datacolumns.push(object)
+                }
+                let stream = new Stream()
+                let workbook = new excel.Workbook()
+                workbook.creator = "Saniya"
+                let worksheet = workbook.addWorksheet("User's")
+                worksheet.columns = datacolumns
+                userData.rows.forEach((user)=>{worksheet.addRow(user).alignment={horizontal:true}});
+                worksheet.getRow(1).eachCell((cell)=>{cell.font = {bold:true}});
+                worksheet.getRow(1).eachCell((cell)=>{cell.alignment ={horizontal:true}});
+                let excelFile = await workbook.xlsx.writeBuffer({filename:`User.xlsx`,stream:stream})
+                res.setHeader("Content-Type","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                res.setHeader("Content-Disposition",`attachment; filename=User.xlsx`);
+                res.send(excelFile);
+            }
+        } catch (error) {
+            res.status(400).json({error:error.message})
+        }
+    }
+
+    getTimeStamp = async() => {
+        return Math.floor(Date.now() / 1000);
     }
 
     SearchUsers = async(req,res) => {

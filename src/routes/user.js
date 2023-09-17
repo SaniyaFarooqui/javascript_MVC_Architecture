@@ -26,6 +26,8 @@ router.get("/getAllUsers",isAutheticated,userController.GetAllUsers)
 router.get("/refreshToken/:token",isAutheticated,userController.RefreshToken)
 router.get("/searchUsers",isAutheticated,userController.SearchUsers)
 router.get("/getUserById/:id",isAutheticated,userController.GetUserById)
+router.get("/ExportUserToCSV",userController.ExportUserToCSV)
+router.get("/ExportUserToExcel",userController.ExportUserToExcel)
 
 router.delete("/deleteUserById/:id",isAutheticated,userController.DeleteUser)
 router.delete("/BulkDeleteUser",isAutheticated,userController.BulkDeleteUser)

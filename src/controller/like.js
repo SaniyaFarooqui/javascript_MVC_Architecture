@@ -6,9 +6,11 @@ class LikeController {
   }
 
   createLike = async (req, res) => {
-    let LikeData = req.body;
-    //console.log(LikeData);
-    if (LikeData.user_id == undefined && LikeData.post_id == undefined || LikeData.user_id == undefined && LikeData.comment_id == undefined) {
+    let userId = req.user?.id
+    let LikeData = req.body
+    console.log(LikeData);
+    LikeData.user_id = userId
+    if (LikeData.user_id == undefined && LikeData.postId == undefined || LikeData.user_id == undefined && LikeData.comment_id == undefined) {
       res.status(400).json({ error: "Please fill the required field" });
     } else {
       try {
@@ -22,7 +24,7 @@ class LikeController {
             }
           });
           console.log(isexist);
-          if(isexist == null){
+          if(isexist == null || isexist == undefined){
             let response = await Like.create(LikeData);
             console.log(response);
             if (response == null || response == undefined) {
@@ -32,7 +34,7 @@ class LikeController {
             }
           }else{
             let response = await Like.destroy({where:{
-              post_id:LikeData.post_id,
+              id:isexist.id
             }});
             if (response == null || response == undefined) {
               res.status(400).json({error: "Operation cannot complete due to error please try again",});
@@ -68,20 +70,6 @@ class LikeController {
       }
     }
   };
-
-  commentlike = async(req,res)=>{
-    let commentData = req.data
-    if(commentData.comment_id == undefined && commentData.user_id == undefined|| commentData.user_id == null && commentData.comment_id == undefined){
-      res.status(400).json({error : "please provide required Data"})
-    }else{
-      try {
-        
-
-      } catch (error) {
-        
-      }
-    }
-  }
 
   getAllLike = async(req, res) => {
     let page = req.params.page
@@ -136,7 +124,7 @@ class LikeController {
       try {
         let response = await Like.findAndCountAll({
           where:{
-            post_id:id
+            postId:id
           }
         })
         if(response == null || response == undefined){

@@ -7,11 +7,13 @@ class CommentController{
   }
 
   createComment = async(req,res) => {
+    let userId =req.user?.id
     let commentData = req.body
     if(commentData == null || commentData == undefined){
       res.status(400).json({error : "please fill the required field"});
     }else{
       try {
+        commentData.userId = userId
         let response = await comment.create(commentData)
         console.log(response);
         if(response == null || response == undefined){

@@ -8,9 +8,11 @@ class userActivtyController{
 
     createUserActivity = async(req,res)=>{
         let userActivity = req.body
+        let userId =req.user?.id
         if(userActivity == null || userActivity== undefined){
             res.status(400).json({error :"please entre userActivity"});
         }else{
+            userActivity.userId = userId
             try {
                 let response = await userActivty.create(userActivity);
                 if(response == null || response == undefined){
