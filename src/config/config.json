@@ -1,21 +1,21 @@
 {
   "development": {
     "username": "root",
-    "password": "root",
+    "password": "roottoor",
     "database": "mvc_database",
     "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": "root",
+    "password": "roottoor",
     "database": "mvc_database",
     "host": "localhost",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
-    "password": "root",
+    "password": "roottoor",
     "database": "mvc_database",
     "host": "localhost",
     "dialect": "mysql"
