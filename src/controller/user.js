@@ -8,8 +8,9 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import Papa from "papaparse";
 import excel from "exceljs";
-import { response } from "express";
+import fs from "fs";
 import Stream from "stream";
+import { response } from "express";
 class UserController {
   constructor() {}
 
@@ -76,11 +77,9 @@ class UserController {
         });
         console.log(isEmailExist);
         if (isEmailExist == null) {
-          res
-            .status(400)
-            .json({
-              error: "User with this email not registered please Sign up",
-            });
+          res.status(400).json({
+            error: "User with this email not registered please Sign up",
+          });
         } else {
           if (await bcrypt.compare(password, isEmailExist.password)) {
             let token = jwt.sign(
@@ -235,6 +234,39 @@ class UserController {
       }
     } catch (error) {
       res.status(400).json({ error: error.message });
+    }
+  };
+
+  ImportUserFromExcel_or_CSV = async (req, res) => {
+    let file = await req.file;
+    let eachData = [];
+    let finaldata = [];
+    if (file == null || file == undefined) {
+      res.status(400).json({ error: "Please Select File to Import" });
+    } else {
+      try {
+        let data = JSON.parse(
+          JSON.stringify(file.buffer.toString().split("\r\n"))
+        );
+        let header = data[0];
+        data.shift();
+        let key = header.split(",");
+        data.forEach((value) => {
+          eachData.push(value.split(","));
+        });
+        // for (let response of eachData) {
+        //   let object = {};
+        //   for (let i = 0; i < key.length; i++) {
+        //     object[`${key[i]}`] = response[i];
+        //     finaldata.push(object);
+        //   }
+        // }
+        // let response = await user.bulkCreate(finaldata);
+        // console.log(response);
+        res.status(200).json({ data: finaldata });
+      } catch (error) {
+        res.status(400).json({ error: error.message });
+      }
     }
   };
 
