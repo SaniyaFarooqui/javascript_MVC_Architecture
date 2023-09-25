@@ -237,13 +237,14 @@ class UserController {
     }
   };
 
-  ImportUserFromExcel_or_CSV = async (req, res) => {
+  ImportUserFromCSV = async (req, res) => {
     let file = await req.file;
     let eachData = [];
-    let finaldata = [];
+    let finaldataValue = [];
+    let Finaldata = [];
     if (file == null || file == undefined) {
       res.status(400).json({ error: "Please Select File to Import" });
-    } else {
+    } else if (file.originalname.split(".")[1] == "csv") {
       try {
         let data = JSON.parse(
           JSON.stringify(file.buffer.toString().split("\r\n"))
@@ -254,19 +255,42 @@ class UserController {
         data.forEach((value) => {
           eachData.push(value.split(","));
         });
-        // for (let response of eachData) {
-        //   let object = {};
-        //   for (let i = 0; i < key.length; i++) {
-        //     object[`${key[i]}`] = response[i];
-        //     finaldata.push(object);
-        //   }
-        // }
-        // let response = await user.bulkCreate(finaldata);
-        // console.log(response);
-        res.status(200).json({ data: finaldata });
+        eachData.forEach((eachArray) => {
+          if (eachArray.length === 1 || eachArray.length === 0) {
+            let index = eachData.indexOf(eachArray);
+            eachData.splice(index, 0);
+          } else {
+            finaldataValue.push(eachArray);
+          }
+        });
+
+        for (let response of finaldataValue) {
+          let object = {};
+          for (let i = 0; i < response.length; i++) {
+            object[`${key[i]}`] = response[i];
+          }
+          Finaldata.push(object);
+        }
+        Finaldata.forEach(async (eachUser) => {
+          let userResponse = await user.findOne({
+            where: {
+              email: {
+                [Op.like]: `${eachUser.email}`,
+              },
+            },
+          });
+          if (userResponse.length == 0) {
+            await user.create(eachUser);
+          }
+        });
+        res.status(200).json({ message: "Imported Data Successfully" });
       } catch (error) {
         res.status(400).json({ error: error.message });
       }
+    } else {
+      res
+        .status(400)
+        .json({ error: "Please Select Proper CSV file to export" });
     }
   };
 

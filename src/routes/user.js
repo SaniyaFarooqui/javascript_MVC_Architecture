@@ -24,10 +24,10 @@ let router = Router();
 router.post("/createUser", upload.single("file"), userController.CreateUser);
 router.post("/loginUser", userController.LoginController);
 router.post(
-  "/ImportUser",
+  "/ImportUserFromCSV",
   upload.single("file"),
   //   isAutheticated,
-  userController.ImportUserFromExcel_or_CSV
+  userController.ImportUserFromCSV
 );
 
 router.put(
