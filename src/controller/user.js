@@ -11,6 +11,7 @@ import excel from "exceljs";
 import fs from "fs";
 import Stream from "stream";
 import { response } from "express";
+
 class UserController {
   constructor() {}
 
@@ -336,6 +337,51 @@ class UserController {
       }
     } catch (error) {
       res.status(400).json({ error: error.message });
+    }
+  };
+
+  ImportUserFromExcel = async (req, res) => {
+    let file = await req.file;
+    let workbook = new excel.Workbook();
+    if (file == null || file == undefined) {
+      res.status(400).json({ error: "select file" });
+    } else {
+      try {
+        let datavalues = [];
+        let keys = [];
+        let objectvalues = [];
+        if (
+          file.originalname.split(".")[1] == "xlsx" ||
+          file.originalname.split(".")[1] == "xls"
+        ) {
+          let data = await workbook.xlsx.load(file.buffer);
+          let worksheet = workbook.getWorksheet(data.worksheet);
+          worksheet.eachRow({ includeEmpty: false }, (row) => {
+            datavalues.push(JSON.parse(JSON.stringify(row.values)));
+          });
+          keys = datavalues[0];
+          keys.shift();
+          datavalues.shift();
+          datavalues.forEach((eachrow) => {
+            datavalues.push(eachrow.shift());
+          });
+          // for (let value of datavalues) {
+          //   let object = {};
+          //   for (let i = 0; i < value.length; i++) {
+          //     object[`${keys[i]}`] = value[i];
+          //   }
+          //   objectvalues.push(object);
+          // }
+          res.status(200).json({ key: keys, data: datavalues });
+        } else {
+          res
+            .status(400)
+            .json({ error: "Please select a Excel file to Import" });
+        }
+      } catch (error) {
+        console.log(error);
+        res.status(400).json({ error: error.message });
+      }
     }
   };
 

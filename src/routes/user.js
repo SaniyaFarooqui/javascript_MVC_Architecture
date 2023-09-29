@@ -36,6 +36,11 @@ router.put(
   isAutheticated,
   userController.UpdateUser
 );
+router.post(
+  "/importuserfromexcel",
+  upload.single("file"),
+  userController.ImportUserFromExcel
+);
 
 router.get("/getAllUsers", isAutheticated, userController.GetAllUsers);
 router.get("/refreshToken/:token", isAutheticated, userController.RefreshToken);
