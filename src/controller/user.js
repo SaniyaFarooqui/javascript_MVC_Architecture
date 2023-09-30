@@ -297,7 +297,9 @@ class UserController {
 
   ExportUserToExcel = async (req, res) => {
     try {
-      let userData = await user.findAndCountAll();
+      let userData = await user.findAndCountAll({
+        attributes: { exclude: ["id", "password"] },
+      });
       if (userData == null || userData == undefined) {
         res.status(200).json({ message: "No Data Found" });
       } else {
@@ -349,7 +351,7 @@ class UserController {
       try {
         let datavalues = [];
         let keys = [];
-        let objectvalues = [];
+        let finalData = [];
         if (
           file.originalname.split(".")[1] == "xlsx" ||
           file.originalname.split(".")[1] == "xls"
@@ -362,17 +364,26 @@ class UserController {
           keys = datavalues[0];
           keys.shift();
           datavalues.shift();
-          datavalues.forEach((eachrow) => {
-            datavalues.push(eachrow.shift());
-          });
-          // for (let value of datavalues) {
-          //   let object = {};
-          //   for (let i = 0; i < value.length; i++) {
-          //     object[`${keys[i]}`] = value[i];
-          //   }
-          //   objectvalues.push(object);
-          // }
-          res.status(200).json({ key: keys, data: datavalues });
+          for (let value of datavalues) {
+            value.shift();
+          }
+          for (let data of datavalues) {
+            let object = {};
+            for (let i = 0; i < keys.length; i++) {
+              object[`${keys[i]}`] = data[i];
+            }
+            finalData.push(object);
+          }
+
+          for (let response of finalData) {
+            let isEmailExist = await user.findOne({
+              where: { email: response.email },
+            });
+            if (isEmailExist.length == 0) {
+              await user.create(response);
+            }
+          }
+          res.status(200).json({ message: "Imported Successfully" });
         } else {
           res
             .status(400)
