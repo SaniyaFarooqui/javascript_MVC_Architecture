@@ -5,7 +5,7 @@ import post from "../models/post.js";
 import user from "../models/user.js";
 import Papa from "papaparse";
 import excel from "exceljs";
-import stream from "stream";
+import Stream from "stream";
 class PostController {
   constructor() {}
 
@@ -151,7 +151,10 @@ class PostController {
 
   ExportPostToExcel = async (req, res) => {
     try {
-      let postData = await post.findAndCountAll({ raw: true });
+      let postData = await post.findAndCountAll({
+        raw: true,
+        attributes: { exclude: ["userId", "id", "location"] },
+      });
       console.log(postData);
       if (
         postData == null ||
@@ -160,7 +163,7 @@ class PostController {
       ) {
         res.status(200).json({ message: "No post data found" });
       } else {
-        let key = Object.keys(postData.rows[0].dataValues);
+        let key = Object.keys(postData.rows[0]);
         let datacolumns = [];
         for (let i = 0; i < key.length; i++) {
           let object = {};
@@ -191,10 +194,11 @@ class PostController {
           "Content-Type",
           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         );
-        res.setHeader("Content-Disposition", `attachment; filename=User.xlsx`);
+        res.setHeader("Content-Disposition", `attachment; filename=post.xlsx`);
         res.send(excelFile);
       }
     } catch (error) {
+      console.log(error);
       res.status(400).json({ error: error.message });
     }
   };

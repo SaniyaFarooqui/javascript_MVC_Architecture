@@ -352,6 +352,7 @@ class UserController {
         let datavalues = [];
         let keys = [];
         let finalData = [];
+        let validation_error = [];
         if (
           file.originalname.split(".")[1] == "xlsx" ||
           file.originalname.split(".")[1] == "xls"
@@ -367,23 +368,29 @@ class UserController {
           for (let value of datavalues) {
             value.shift();
           }
-          for (let data of datavalues) {
-            let object = {};
-            for (let i = 0; i < keys.length; i++) {
-              object[`${keys[i]}`] = data[i];
-            }
-            finalData.push(object);
+          for (let key in user.rawAttributes) {
+            validation_error.push(key);
           }
+          validation_error.shift();
+          validation_error.splice(3, 2);
+          console.log(validation_error);
+          // for (let data of datavalues) {
+          //   let object = {};
+          //   for (let i = 0; i < keys.length; i++) {
+          //     object[`${keys[i]}`] = data[i];
+          //   }
+          //   finalData.push(object);
+          // }
 
-          for (let response of finalData) {
-            let isEmailExist = await user.findOne({
-              where: { email: response.email },
-            });
-            if (isEmailExist.length == 0) {
-              await user.create(response);
-            }
-          }
-          res.status(200).json({ message: "Imported Successfully" });
+          // for (let response of finalData) {
+          //   let isEmailExist = await user.findOne({
+          //     where: { email: response.email },
+          //   });
+          //   if (isEmailExist.length == 0) {
+          //     await user.create(response);
+          //   }
+          // }
+          res.status(200).json({ data: validation_error });
         } else {
           res
             .status(400)
