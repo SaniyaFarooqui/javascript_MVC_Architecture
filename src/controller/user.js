@@ -1,5 +1,5 @@
 import user from "../models/user.js";
-import { Op, json } from "sequelize";
+import { Op } from "sequelize";
 import UserActivty from "../models/userActivity.js";
 import post from "../models/post.js";
 import like from "../models/like.js";
@@ -8,9 +8,8 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import Papa from "papaparse";
 import excel from "exceljs";
-import fs from "fs";
+
 import Stream from "stream";
-import { response } from "express";
 
 class UserController {
   constructor() {}
@@ -253,38 +252,46 @@ class UserController {
         let header = data[0];
         data.shift();
         let key = header.split(",");
-        data.forEach((value) => {
-          eachData.push(value.split(","));
-        });
-        eachData.forEach((eachArray) => {
-          if (eachArray.length === 1 || eachArray.length === 0) {
-            let index = eachData.indexOf(eachArray);
-            eachData.splice(index, 0);
-          } else {
-            finaldataValue.push(eachArray);
-          }
-        });
-
-        for (let response of finaldataValue) {
-          let object = {};
-          for (let i = 0; i < response.length; i++) {
-            object[`${key[i]}`] = response[i];
-          }
-          Finaldata.push(object);
-        }
-        Finaldata.forEach(async (eachUser) => {
-          let userResponse = await user.findOne({
-            where: {
-              email: {
-                [Op.like]: `${eachUser.email}`,
-              },
-            },
+        let validation_key = [];
+        for (let key in user.rawAttributes) validation_key.push(key);
+        validation_key.shift();
+        validation_key.splice(3, 1);
+        if (JSON.stringify(validation_key) === JSON.stringify(key)) {
+          data.forEach((value) => {
+            eachData.push(value.split(","));
           });
-          if (userResponse.length == 0) {
-            await user.create(eachUser);
+          eachData.forEach((eachArray) => {
+            if (eachArray.length === 1 || eachArray.length === 0) {
+              let index = eachData.indexOf(eachArray);
+              eachData.splice(index, 0);
+            } else {
+              finaldataValue.push(eachArray);
+            }
+          });
+
+          for (let response of finaldataValue) {
+            let object = {};
+            for (let i = 0; i < response.length; i++) {
+              object[`${key[i]}`] = response[i];
+            }
+            Finaldata.push(object);
           }
-        });
-        res.status(200).json({ message: "Imported Data Successfully" });
+          Finaldata.forEach(async (eachUser) => {
+            let userResponse = await user.findOne({
+              where: {
+                email: {
+                  [Op.like]: `${eachUser.email}`,
+                },
+              },
+            });
+            if (userResponse.length == 0) {
+              await user.create(eachUser);
+            }
+          });
+          res.status(200).json({ message: "Imported Data Successfully" });
+        } else {
+          res.status(404).json({ message: "please select a valid CSV file" });
+        }
       } catch (error) {
         res.status(400).json({ error: error.message });
       }
@@ -372,25 +379,28 @@ class UserController {
             validation_error.push(key);
           }
           validation_error.shift();
-          validation_error.splice(3, 2);
-          console.log(validation_error);
-          // for (let data of datavalues) {
-          //   let object = {};
-          //   for (let i = 0; i < keys.length; i++) {
-          //     object[`${keys[i]}`] = data[i];
-          //   }
-          //   finalData.push(object);
-          // }
+          validation_error.splice(3, 1);
 
-          // for (let response of finalData) {
-          //   let isEmailExist = await user.findOne({
-          //     where: { email: response.email },
-          //   });
-          //   if (isEmailExist.length == 0) {
-          //     await user.create(response);
-          //   }
-          // }
-          res.status(200).json({ data: validation_error });
+          if (JSON.stringify(validation_error) === JSON.stringify(keys)) {
+            for (let data of datavalues) {
+              let object = {};
+              for (let i = 0; i < keys.length; i++) {
+                object[`${keys[i]}`] = data[i];
+              }
+              finalData.push(object);
+            }
+            for (let response of finalData) {
+              let isEmailExist = await user.findOne({
+                where: { email: response.email },
+              });
+              if (isEmailExist.length == 0) {
+                await user.create(response);
+              }
+            }
+            res.status(200).json({ message: "Imported succeesfully" });
+          } else {
+            res.status(400).json({ error: "Please Select a Valid File" });
+          }
         } else {
           res
             .status(400)
