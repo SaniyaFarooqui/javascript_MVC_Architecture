@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "roottoor",
+    "password": "pass",
     "database": "mvc_database",
     "host": "localhost",
     "dialect": "mysql"

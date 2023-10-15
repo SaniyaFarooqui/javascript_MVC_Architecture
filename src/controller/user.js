@@ -8,13 +8,14 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import Papa from "papaparse";
 import excel from "exceljs";
-
-import Stream from "stream";
+import * as fs from 'node:fs';
+import Stream,{Readable} from "stream";
 
 class UserController {
   constructor() {}
 
   CreateUser = async (req, res) => {
+    let destination = "src/upload/user"
     let userData = req.body;
     let file = req.file;
     console.log(file);
@@ -29,19 +30,21 @@ class UserController {
       res.status(400).json({ error: "Name / Email required" });
     } else {
       try {
-        let filepath =
-          process.env.server + "/" + file.destination + "/" + file.filename;
+        let stream = Readable.from(file.buffer);
+        let filepath = `${destination}/${file.originalname.split(".")[0]+"_"+this.getTimeStamp()}.${file.originalname.split(".")[1]}`
+        let writer = fs.createWriteStream(filepath);
+        stream.pipe(writer)
         let salt = await bcrypt.genSalt(10);
         let hashpassword = await bcrypt.hash(userData.password, salt);
         userData.password = hashpassword;
-        userData.user_image = filepath;
+        userData.user_image = `${process.env.server}/${filepath}`;
         let response = await user.create(userData);
-        console.log(response);
         if (response == null || response == undefined) {
           res
             .status(400)
             .json({ error: "operation couldn't complete due to error" });
         } else {
+          
           res
             .status(200)
             .json({ message: "user created successfully ", data: response });
@@ -523,5 +526,9 @@ class UserController {
       res.status(400).json({ error: error.message });
     }
   };
+
+  getTimeStamp = () => {
+    return Math.floor(Date.now()/1000)
+  }
 }
 export default UserController;
