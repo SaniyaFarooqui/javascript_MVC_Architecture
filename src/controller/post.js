@@ -5,13 +5,15 @@ import post from "../models/post.js";
 import user from "../models/user.js";
 import Papa from "papaparse";
 import excel from "exceljs";
-import Stream from "stream";
+import Stream, { Readable }from "stream";
+import fs from "fs";
 class PostController {
   constructor() {}
 
   createPost = async (req, res) => {
     let userId = req.user?.id;
     let postData = req.body;
+    let destination = "src/upload/post";
     let file = req.file;
     console.log(file);
     if (postData == null || postData == undefined) {
@@ -20,14 +22,14 @@ class PostController {
       res.status(400).json({ message: "Please select atleast 1 imageas  " });
     } else {
       try {
-        let filepath =
-          process.env.server + "/" + file.destination + "/" + file.filename;
+        let stream = Readable.from(file.buffer)
+        let filepath =`${destination}/${file.originalname.split(".")[0]+"_"+this.getTimeStamp()}.${file.originalname.split(".")[1]}`
+        let writer = fs.createWriteStream(filepath);
+        stream.pipe(writer);
         postData.post_image = filepath;
         postData.userId = userId;
         if (postData.title == undefined || postData.location == undefined) {
-          res
-            .status(400)
-            .json({ error: "Please enter the title / location of post" });
+          res.status(400).json({ error: "Please enter the title / location of post" });
         } else {
           let response = await post.create(postData);
           console.log(response);
@@ -331,6 +333,11 @@ class PostController {
       }
     }
   };
+
+  
+  getTimeStamp = () => {
+    return Math.floor(Date.now()/1000)
+  }
 }
 
 export default PostController;

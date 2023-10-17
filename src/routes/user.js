@@ -6,16 +6,7 @@ import path from "path";
 
 //Normal Upload for Upload Folder
 let upload = multer({
-  storage: multer.memoryStorage({
-    destination: "src/upload/user",
-    filename: (req, file, cb) => {
-      cb(
-        null,
-        file.fieldname + "_" + Date.now() + path.extname(file.originalname)
-      );
-    },
-  }),
-  limits: { fileSize: 20000000 }, // 2mb of file is accepted,
+  storage: multer.memoryStorage(),
 });
 
 let userController = new UserController();
