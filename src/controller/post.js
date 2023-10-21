@@ -26,7 +26,7 @@ class PostController {
         let filepath =`${destination}/${file.originalname.split(".")[0]+"_"+this.getTimeStamp()}.${file.originalname.split(".")[1]}`
         let writer = fs.createWriteStream(filepath);
         stream.pipe(writer);
-        postData.post_image = filepath;
+        postData.post_image = `${process.env.server}/${filepath}`;
         postData.userId = userId;
         if (postData.title == undefined || postData.location == undefined) {
           res.status(400).json({ error: "Please enter the title / location of post" });

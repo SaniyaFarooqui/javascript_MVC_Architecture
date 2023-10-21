@@ -143,19 +143,25 @@ class UserController {
   UpdateUser = async (req, res) => {
     let { id } = req.params;
     let userData = req.body;
+    let file = req.file;
     if (id == null || id == undefined) {
       res.status(400).json({ error: "please provide the id to update" });
     } else {
       try {
-        let response = await user.update(userData, {
-          where: {
-            id: id,
-          },
-        });
-        if (response > 0) {
-          res.status(200).json({ message: "Update successfully" });
-        } else {
-          res.status(400).json({ error: "Update fail please try again" });
+        if(file != null || file!= undefined){
+          let response = await user.update(userData, {
+            where: {
+              id: id,
+            },
+          });
+          if (response > 0) {
+            res.status(200).json({ message: "Update successfully" });
+          } else {
+            res.status(400).json({ error: "Update fail please try again" });
+          }
+        }
+        else{
+          
         }
       } catch (error) {
         if (!error.errors) {
