@@ -10,6 +10,7 @@ import Papa from "papaparse";
 import excel from "exceljs";
 import * as fs from 'node:fs';
 import Stream,{Readable} from "stream";
+import { CLIENT_RENEG_LIMIT } from "node:tls";
 
 class UserController {
   constructor() {}
@@ -148,23 +149,60 @@ class UserController {
       res.status(400).json({ error: "please provide the id to update" });
     } else {
       try {
-        if(file != null || file!= undefined){
-          let response = await user.update(userData, {
-            where: {
-              id: id,
-            },
-          });
-          if (response > 0) {
-            res.status(200).json({ message: "Update successfully" });
-          } else {
-            res.status(400).json({ error: "Update fail please try again" });
+        let destination = 'src/upload/user'
+        if(file == null || file == undefined){
+          let user = await user.findByPk(id);
+          if(user == null || user == undefined){
+            res.status(400).json({error:"Please select a valid user"});
+          }else{
+            let response = await user.update(userData, {
+              where: {
+                id: id,
+              },
+            });
+            if (response > 0) {
+              res.status(200).json({ message: "Update successfully" });
+            } else {
+              res.status(400).json({ error: "Update fail please try again" });
+            }
           }
-        }
-        else{
-          
+        }else{
+          //let userValue = await user.findByPk(id);
+          // if(userValue == null || userValue == undefined){
+          //   res.status(400).json({error:"Please select a valid user"});
+          // }else{
+          //   let filepath = `${destination}/${file.originalname.split(".")[0]}_${this.getTimeStamp()}.${file.originalname.split(".")[1]}`
+          //   if(userValue.user_image == null || userValue.user_image == undefined){
+          //     let stream = Readable.from(file.buffer);
+          //     let writer = fs.createWriteStream(filepath)
+          //     stream.pipe(writer)
+          //     let value = userValue.user_image = `${process.env.server}/${filepath}`
+          //     let update = await user.update({user_image:value},{where:{id:id}});
+          //     if(update > 0){
+          //       res.status(200).json({ message: "Update successfully" });
+          //     }else{
+          //       res.status(400).json({ error : "Didnt Update please try again" });
+          //     }
+          //   }else{
+          //     let file_name = userValue.user_image.split("user/")[1]
+          //     if(file_name !== null && file_name !== undefined){
+          //       fs.rm(`${destination}/${file_name}`,(err)=>{
+          //         if(err){
+          //           res.status(400).json({error:err})
+          //         }else{
+          //           let stream = Readable.from(file.buffer);
+          //           let writer = fs.createWriteStream(filepath)
+          //           stream.pipe(writer)
+          //           res.status(200).json({ message: "Update successfully" });    
+          //         }
+          //       });
+          //     }
+          //   }
+          // }
         }
       } catch (error) {
         if (!error.errors) {
+          console.log(error);
           res.status(400).json({ error: error.message });
         } else {
           let validation_error = {};
