@@ -145,11 +145,11 @@ class UserController {
     let { id } = req.params;
     let userData = req.body;
     let file = req.file;
+    let destination = "src/uploads/user"
     if (id == null || id == undefined) {
       res.status(400).json({ error: "please provide the id to update" });
     } else {
       try {
-        let destination = 'src/upload/user'
         if(file == null || file == undefined){
           let user = await user.findByPk(id);
           if(user == null || user == undefined){
@@ -161,6 +161,7 @@ class UserController {
               },
             });
             if (response > 0) {
+              
               res.status(200).json({ message: "Update successfully" });
             } else {
               res.status(400).json({ error: "Update fail please try again" });

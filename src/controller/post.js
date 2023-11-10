@@ -7,6 +7,7 @@ import Papa from "papaparse";
 import excel from "exceljs";
 import Stream, { Readable }from "stream";
 import fs from "fs";
+import { CLIENT_RENEG_LIMIT } from "tls";
 class PostController {
   constructor() {}
 
@@ -50,6 +51,8 @@ class PostController {
   updatePost = async (req, res) => {
     let { id } = req.params;
     let postData = req.body;
+    let file = req.file
+    let destination = "src/upload/post"
     if (
       postData == null ||
       postData == undefined ||
@@ -59,21 +62,56 @@ class PostController {
       res.status(400).json({ message: "Please fill the required field" });
     } else {
       try {
-        let response = await post.update(postData, { where: { id: id } });
-        console.log(response);
-        if (response == 0) {
-          res.status(400).json({
-            error: "Operation cannot complete due to error please try again",
-          });
-        } else if (response > 0) {
-          res.status(200).json({ message: "Updated Successfully" });
-        } else {
-          res
-            .status(400)
-            .json({ error: "Something went wrong please try again" });
+        let response = await post.findByPk(id);
+        if(response == null || response == undefined) {
+          res.status(400).json({error:"Please Select Data properly"});
+        }else{
+          if(response.post_image == null){
+            let stream = Readable.from(file.buffer)
+            let filepath =`${destination}/${file.originalname.split(".")[0]+"_"+this.getTimeStamp()}.${file.originalname.split(".")[1]}`
+            let writer = fs.createWriteStream(filepath);
+            stream.pipe(writer);
+            postData["post_image"] = `${process.env.server}/${filepath}`;
+            let update = await post.update(postData,{where:{
+              id:id
+            }});
+            if(update > 0){
+              res.status(200).json({message:"Updated Successfully"});
+            }else{
+              res.status(400).json({error:"Couldn't Updated Please try again"});
+            }
+          }else{
+            if(file !== null || file !== undefined){
+              let data = response.post_image.split("/")
+              let filename = data[data.length - 1]
+              fs.rm(`${destination}/${filename}`,(err)=>{});
+              let stream = Readable.from(file.buffer)
+              let filepath =`${destination}/${file.originalname.split(".")[0]+"_"+this.getTimeStamp()}.${file.originalname.split(".")[1]}`
+              let writer = fs.createWriteStream(filepath);
+              stream.pipe(writer);
+              postData["post_image"] = `${process.env.server}/${filepath}`;
+              let update = await post.update(postData,{where:{
+                id:id
+              }});
+              if(update > 0){
+                res.status(200).json({message:"Updated Successfully"});
+              }else{
+                res.status(400).json({error:"Couldn't Updated Please try again"});
+              }
+            }else{
+              let update = await post.update(postData,{where:{
+                id:id
+              }});
+              if(update > 0){
+                res.status(200).json({message:"Updated Successfully"});
+              }else{
+                res.status(400).json({error:"Couldn't Updated Please try again"});
+              }
+            }
+          }
         }
       } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(400).json({ error: error });
       }
     }
   };
