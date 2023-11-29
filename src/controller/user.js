@@ -10,7 +10,7 @@ import Papa from "papaparse";
 import excel from "exceljs";
 import * as fs from 'node:fs';
 import Stream,{Readable} from "stream";
-import { CLIENT_RENEG_LIMIT } from "node:tls";
+
 
 class UserController {
   constructor() {}
@@ -145,77 +145,66 @@ class UserController {
     let { id } = req.params;
     let userData = req.body;
     let file = req.file;
-    let destination = "src/uploads/user"
+    console.log(file);
+    let destination = "src/upload/user"
     if (id == null || id == undefined) {
       res.status(400).json({ error: "please provide the id to update" });
     } else {
       try {
-        if(file == null || file == undefined){
-          let user = await user.findByPk(id);
-          if(user == null || user == undefined){
-            res.status(400).json({error:"Please select a valid user"});
-          }else{
-            let response = await user.update(userData, {
-              where: {
-                id: id,
-              },
-            });
-            if (response > 0) {
-              
-              res.status(200).json({ message: "Update successfully" });
-            } else {
-              res.status(400).json({ error: "Update fail please try again" });
-            }
-          }
+        let response = await user.findByPk(id);
+        if(response == null || response == undefined) {
+          res.status(400).json({error:"Please Select Data properly"});
         }else{
-          //start user update from here;
-          let userValue = await user.findByPk(id);
-          if(userValue == null || userValue == undefined){
-            res.status(400).json({error:"Please select a valid user"});
-          }else{
-            let filepath = `${destination}/${file.originalname.split(".")[0]}_${this.getTimeStamp()}.${file.originalname.split(".")[1]}`
-            if(userValue.user_image == null || userValue.user_image == undefined){
-              let stream = Readable.from(file.buffer);
-              let writer = fs.createWriteStream(filepath)
-              stream.pipe(writer)
-              let value = userValue.user_image = `${process.env.server}/${filepath}`
-              let update = await user.update({user_image:value},{where:{id:id}});
-              if(update > 0){
-                res.status(200).json({ message: "Update successfully" });
-              }else{
-                res.status(400).json({ error : "Didnt Update please try again" });
-              }
+          if(response.user_image == null){
+            let stream = Readable.from(file.buffer)
+            let filepath =`${destination}/${file.originalname.split(".")[0]+"_"+this.getTimeStamp()}.${file.originalname.split(".")[1]}`
+            let writer = fs.createWriteStream(filepath);
+            stream.pipe(writer);
+            userData["user_image"] = `${process.env.server}/${filepath}`;
+            let update = await user.update(userData,{where:{
+              id:id
+            }});
+            if(update > 0){
+              res.status(200).json({message:"Updated Successfully"});
             }else{
-              let file_name = userValue.user_image.split("user/")[1]
-              if(file_name !== null && file_name !== undefined){
-                fs.rm(`${destination}/${file_name}`,(err)=>{
-                  if(err){
-                    res.status(400).json({error:err})
-                  }else{
-                    let stream = Readable.from(file.buffer);
-                    let writer = fs.createWriteStream(filepath)
-                    stream.pipe(writer)
-                    res.status(200).json({ message: "Update successfully" });    
-                  }
-                });
-              }
+              res.status(400).json({error:"Couldn't Updated Please try again"});
+            }
+          }else{
+          //start user update from here;
+          if(file !== null || file !== undefined){
+            let data = response.user_image.split("/")
+            let filename = data[data.length - 1]
+            fs.rm(`${destination}/${filename}`,(err)=>{});
+            let stream = Readable.from(file.buffer)
+            let filepath =`${destination}/${file.originalname.split(".")[0]+"_"+this.getTimeStamp()}.${file.originalname.split(".")[1]}`
+            let writer = fs.createWriteStream(filepath);
+            stream.pipe(writer);
+            userData["user_image"] = `${process.env.server}/${filepath}`;
+            let update = await user.update(userData,{where:{
+              id:id
+            }});
+            if(update > 0){
+              res.status(200).json({message:"Updated Successfully"});
+            }else{
+              res.status(400).json({error:"Couldn't Updated Please try again"});
+            }
+          }else{
+            let update = await user.update(userData,{where:{
+              id:id
+            }});
+            if(update > 0){
+              res.status(200).json({message:"Updated Successfully"});
+            }else{
+              res.status(400).json({error:"Couldn't Updated Please try again"});
             }
           }
         }
+       }
       } catch (error) {
-        if (!error.errors) {
-          console.log(error);
-          res.status(400).json({ error: error.message });
-        } else {
-          let validation_error = {};
-          for await (let response of error.errors) {
-            validation_error[`${response.path}`] = response.message;
-          }
-          res.status(400).json({ error: validation_error });
-        }
-      }
+        res.status(400).json({ error: error });
     }
-  };
+  }
+};
 
   GetAllUsers = async (req, res) => {
     let page = req.params.page;
