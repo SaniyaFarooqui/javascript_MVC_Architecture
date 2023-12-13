@@ -1,0 +1,1456 @@
+{
+	"info": {
+		"_postman_id": "78d382ff-9584-4204-8020-94e92cbcad23",
+		"name": "Blog Application",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28729382"
+	},
+	"item": [
+		{
+			"name": "post",
+			"item": [
+				{
+					"name": "createPost",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJmYzY1NzEyLWNmMDUtNDA3Yi05NGIwLTBiNmU1MmE1YmE0ZSIsInVzZXJOYW1lIjoiU2FuaXlhIiwiaWF0IjoxNjk3OTA0MjYzLCJleHAiOjE2OTc5MDYwNjN9.Lz7BF5on43I7ilQpAeeCk6UqAa2_BcKoENtiZCSlnA0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Saniya/OneDrive/Pictures/Camera Roll/file_1694447703627.png"
+								},
+								{
+									"key": "title",
+									"value": "alfiyaFirst Post",
+									"type": "text"
+								},
+								{
+									"key": "location",
+									"value": "mumbai",
+									"type": "text"
+								},
+								{
+									"key": "tag",
+									"value": "alfiya",
+									"type": "text"
+								},
+								{
+									"key": "userId",
+									"value": "bfc65712-cf05-407b-94b0-0b6e52a5ba4e",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:5000/api/post/createPost",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"post",
+								"createPost"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatePost",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJmYzY1NzEyLWNmMDUtNDA3Yi05NGIwLTBiNmU1MmE1YmE0ZSIsInVzZXJOYW1lIjoiU2FuaXlhIEZhcm9vcXVpIiwiaWF0IjoxNjk5NjIyOTM1LCJleHAiOjE2OTk2MjQ3MzV9.uJL0VA4Bdeb9ep0weU1wbMGJ13w7dz0GP4AWfqwqQUI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Saniya/OneDrive/Pictures/Camera Roll/WIN_20231022_19_10_13_Pro.jpg"
+								},
+								{
+									"key": "title",
+									"value": "alfiya's first Post",
+									"type": "text"
+								},
+								{
+									"key": "userId",
+									"value": "d2f7d92c-2ef4-4a63-a878-f163c1783202",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "location",
+									"value": "mahim",
+									"type": "text"
+								},
+								{
+									"key": "tag",
+									"value": "anis",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:5000/api/post/updatepost/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"post",
+								"updatepost",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "73125b5c-110c-4499-9734-c5be452025b9"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllPost",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRhNWUzMmYzLTRmNzAtNDI2ZS1hYjQ2LWQwZWNmYzhlMWNiMiIsInVzZXJOYW1lIjoiYWxmaXlhIiwiaWF0IjoxNjk0NTMzMDU5LCJleHAiOjE2OTQ1MzQ4NTl9.7uG61Airi5w6GaLzE0ffbMoXic-oKzzlhhBYivJW4a4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/post/getAllPost",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"post",
+								"getAllPost"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPostById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRhNWUzMmYzLTRmNzAtNDI2ZS1hYjQ2LWQwZWNmYzhlMWNiMiIsInVzZXJOYW1lIjoiYWxmaXlhIiwiaWF0IjoxNjk0NDQ3NzIwLCJleHAiOjE2OTQ0NDk1MjB9.Xq8kLG41gfemrVtXfMJIqOyNmJdxwuYChsEYciU1Gk0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/post/getPostById/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"post",
+								"getPostById",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "8a439127-be75-42bf-8223-7f7f5c156b1d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeletePost",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmMjUxMzI2LWQyMmEtNDE0My05ZGE2LTIxNTEzNzg3NTUzZCIsInVzZXJOYW1lIjoicmFpc2EiLCJpYXQiOjE2OTM5MDA3MDUsImV4cCI6MTY5MzkwMTAwNX0.QfytNt60s4AO_rqJAzeh2qTyDn19OZyVvW48mFPvWbc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/post/deletePost/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"post",
+								"deletePost",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "9ee78c99-0965-4c87-8b22-3c2a40a678bd"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllPostByUserId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/post/getAllPostByUserId/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"post",
+								"getAllPostByUserId",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "60a183c1-463d-49b4-8af3-b996eda73408"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "searchposts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/post/searchPosts?keyword=Saniya&filterBy=mahim",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"post",
+								"searchPosts"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "Saniya"
+								},
+								{
+									"key": "filterBy",
+									"value": "mahim"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BulkDeletePost",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ids\":[\"fa7339f5-0480-4a5a-8fef-7b7b4439094c\",\"eb387766-0180-4976-a46f-7b3d60105d27\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/post/BulkDeletePost",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"post",
+								"BulkDeletePost"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExportPost To CSV",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/post/ExportPostToCSV",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"post",
+								"ExportPostToCSV"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExportPostToExcel",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/post/ExportPostToExcel",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"post",
+								"ExportPostToExcel"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "comment",
+			"item": [
+				{
+					"name": "create comment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\":\"6a2af6e0-5788-4acc-aeb0-1b220ce91706\",\r\n    \"description\":\"arbaz teaches saniya backhand\",\r\n    \"PostId\":\"fa7339f5-0480-4a5a-8fef-7b7b4439094c\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/comment/createComment",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"comment",
+								"createComment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update comment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\" : \"she is good girl\",\r\n    \"user_id\":\"60a183c1-463d-49b4-8af3-b996eda73408\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/comment/updateComment/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"comment",
+								"updateComment",
+								":id"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "96d85259-763d-42e3-8c59-c8f4488cf39b",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "9859f424-6dfa-45db-b214-81f5c6042cdd"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllComments",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmMjUxMzI2LWQyMmEtNDE0My05ZGE2LTIxNTEzNzg3NTUzZCIsInVzZXJOYW1lIjoicmFpc2EiLCJpYXQiOjE2OTM5MDQ3NzAsImV4cCI6MTY5Mzk5MTE3MH0.yFVFQ6YM-9xCrqtlBD6X-njtsPBnKjg9YwwKgqREDME",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/comment/getAllComment",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"comment",
+								"getAllComment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCommentById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/comment/getCommentById/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"comment",
+								"getCommentById",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "96d85259-763d-42e3-8c59-c8f4488cf39b"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deletecomment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/comment/deleteCommentById/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"comment",
+								"deleteCommentById",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "cb28d9d5-58d8-4a31-b3a9-5410d2692f8a"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "like",
+			"item": [
+				{
+					"name": "createlike",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRhNWUzMmYzLTRmNzAtNDI2ZS1hYjQ2LWQwZWNmYzhlMWNiMiIsInVzZXJOYW1lIjoiYWxmaXlhIiwiaWF0IjoxNjk0OTM5MzgwLCJleHAiOjE2OTQ5NDExODB9.1ic9JJaq9k0bWZl6183b7T-WM8pP0DSChZUd4WS7wVU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"PostId\":\"400ce803-e573-4ee4-afcc-9d6a5233c160\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/like/createlike",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"like",
+								"createlike"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatelike",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmMjUxMzI2LWQyMmEtNDE0My05ZGE2LTIxNTEzNzg3NTUzZCIsInVzZXJOYW1lIjoicmFpc2EiLCJpYXQiOjE2OTM5MDQ3NzAsImV4cCI6MTY5Mzk5MTE3MH0.yFVFQ6YM-9xCrqtlBD6X-njtsPBnKjg9YwwKgqREDME",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"comment_id\" :\"51c60732-f455-4b6d-86a2-8b187cdefbca\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/like/updatelike/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"like",
+								"updatelike",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1b545cf9-86bb-4f3b-8a19-4e2186e45743"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllLike",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmMjUxMzI2LWQyMmEtNDE0My05ZGE2LTIxNTEzNzg3NTUzZCIsInVzZXJOYW1lIjoicmFpc2EiLCJpYXQiOjE2OTM5MDQ3NzAsImV4cCI6MTY5Mzk5MTE3MH0.yFVFQ6YM-9xCrqtlBD6X-njtsPBnKjg9YwwKgqREDME",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/like/getAllLike",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"like",
+								"getAllLike"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getLikeById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/like/getLikeById/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"like",
+								"getLikeById",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "68582179-dc77-495b-9f07-a2a387dd23cb"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteLikeById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/like/deleteLikeById/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"like",
+								"deleteLikeById",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "c9baed08-8f79-4c06-bd6c-60f46742fd38"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllLikeByPostId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRhNWUzMmYzLTRmNzAtNDI2ZS1hYjQ2LWQwZWNmYzhlMWNiMiIsInVzZXJOYW1lIjoiYWxmaXlhIiwiaWF0IjoxNjk0OTM5MzgwLCJleHAiOjE2OTQ5NDExODB9.1ic9JJaq9k0bWZl6183b7T-WM8pP0DSChZUd4WS7wVU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/like/getAllLikeByPostId/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"like",
+								"getAllLikeByPostId",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "400ce803-e573-4ee4-afcc-9d6a5233c160"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "createUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Saniya/OneDrive/Pictures/Camera Roll/file_1694447703627.png"
+								},
+								{
+									"key": "name",
+									"value": "Saniya",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "18",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "saniya99435@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "india",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "saniya@#",
+									"type": "text"
+								},
+								{
+									"key": "state",
+									"value": "Maharashtra",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:5000/api/user/createUser",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"createUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJmYzY1NzEyLWNmMDUtNDA3Yi05NGIwLTBiNmU1MmE1YmE0ZSIsInVzZXJOYW1lIjoiU2FuaXlhIEZhcm9vcXVpIiwiaWF0IjoxNzAxMjcxMzQ3LCJleHAiOjE3MDEyNzMxNDd9.QdB9FYvMot4Ao_4_NxN8F5eWS7sYxmRsvnDEivUPrpQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Saniya/OneDrive/Pictures/Screenshots/Screenshot 2023-10-23 152650.png"
+								},
+								{
+									"key": "name",
+									"value": "Saniya Farooqui",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:5000/api/user/updateuser/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"updateuser",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "3a8cdf68-221a-4c39-931c-aee13a0f73ab"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllUsers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJmYzY1NzEyLWNmMDUtNDA3Yi05NGIwLTBiNmU1MmE1YmE0ZSIsInVzZXJOYW1lIjoiU2FuaXlhIiwiaWF0IjoxNjk3OTAyMjEwLCJleHAiOjE2OTc5MDQwMTB9.PHS6vLaiQu2UrlyJQCOpK-Tv0MWwq9dwhNLec3gntnc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/user/getAllUsers?page=2&limit=10",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"getAllUsers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "searchusers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/user/searchUsers?keyword=sofiya&filterBy=india",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"searchUsers"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "sofiya"
+								},
+								{
+									"key": "filterBy",
+									"value": "india"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getuserbyid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/user/getUserById/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"getUserById",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "96a6ee66-8c25-40b3-a53a-05d96a3cd45d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:5000/api/user/deleteUserById/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"deleteUserById",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1fb7d522-27fc-4893-b28d-4ce3be5a40d6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LoginController",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"saniya9398435@gmail.com\",\r\n    \"password\":\"saniya@#\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/user/loginUser",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"loginUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refreshtoken",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRhNWUzMmYzLTRmNzAtNDI2ZS1hYjQ2LWQwZWNmYzhlMWNiMiIsInVzZXJOYW1lIjoiYWxmaXlhIiwiaWF0IjoxNjk0NDQ2MTM2LCJleHAiOjE2OTQ0NDc5MzZ9.oz9XfWop9h0RAfYOdSy8UemTaQDQMM97tnZLeCDd2Mw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/user/refreshToken/:token",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"refreshToken",
+								":token"
+							],
+							"variable": [
+								{
+									"key": "token",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/src/upload/user/file_1694099030662.jpg",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/src/upload/user/file_1694099030662.jpg",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"src",
+								"upload",
+								"user",
+								"file_1694099030662.jpg"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BulkDeleteUser",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ids\" : [\"1fb7d522-27fc-4893-b28d-4ce3be5a40d6\",\"63287bc0-f2dc-493f-a830-16cb8aa95b81\",     \"96a6ee66-8c25-40b3-a53a-05d96a3cd45d\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/user/BulkDeleteUser",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"BulkDeleteUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout Controller",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/user/logoutUser",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"logoutUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExportUserToCSV",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/user/ExportUserToCSV",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"ExportUserToCSV"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExportToExcel",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:5000/api/user/ExportUserToExcel",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"ExportUserToExcel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Saniya/Downloads/User.xlsx"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:5000/api/user/importuserfromexcel",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"importuserfromexcel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "import to csv",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Saniya/Downloads/User1697903379023.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:5000/api/user/ImportUserFromCSV",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"ImportUserFromCSV"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "userActivity",
+			"item": [
+				{
+					"name": "createUserActivity",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":\"6a2af6e0-5788-4acc-aeb0-1b220ce91706\",\r\n    \"description\": \"saniya is very good girl\",\r\n    \"location\" : \"dharavi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/userActivity/createUserActivity",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"userActivity",
+								"createUserActivity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUserActivity",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\" : \"sofiya is kind hearted girl\",\r\n    \"location\" : \"bandra\",\r\n    \"userId\" :\"6a2af6e0-5788-4acc-aeb0-1b220ce91706\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/userActivity/updateUserActivity/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"userActivity",
+								"updateUserActivity",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6a2af6e0-5788-4acc-aeb0-1b220ce91706"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAlluserActivity",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmMjUxMzI2LWQyMmEtNDE0My05ZGE2LTIxNTEzNzg3NTUzZCIsInVzZXJOYW1lIjoicmFpc2EiLCJpYXQiOjE2OTM5MDEyMTUsImV4cCI6MTY5Mzk4NzYxNX0.2KZq6pktx2q9HxMeeedKRgzUjzhskHYLkjNO-iM1mBU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/userActivity/getAllUserActivity?page=1&limit=10",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"userActivity",
+								"getAllUserActivity"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllUserActivityById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/userActivity/getAllUserActivityById/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"userActivity",
+								"getAllUserActivityById",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "54fd53ad-257a-4876-b442-68a4055106cc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUserActivity",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/userActivity/deleteUserActivity/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"userActivity",
+								"deleteUserActivity",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "54fd53ad-257a-4876-b442-68a4055106cc"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
