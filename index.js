@@ -32,7 +32,6 @@ app.use("/api/like",likeRouter)
 app.use("/api/userActivity",userActivityRouter)
 
 app.use("/src/upload",express.static("src/upload"))
-app.use(express.static("src/upload"))
 
 app.listen(port, ()=>{
     console.log(`Server is accesssing on port : ${port}`);

@@ -145,7 +145,7 @@ class UserController {
     let { id } = req.params;
     let userData = req.body;
     let file = req.file;
-    console.log(file);
+    
     let destination = "src/upload/user"
     if (id == null || id == undefined) {
       res.status(400).json({ error: "please provide the id to update" });
